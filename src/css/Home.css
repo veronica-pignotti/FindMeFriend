@@ -1,0 +1,59 @@
+#Home input[type= button]{
+    margin-top:35px;
+    margin-left: 20px;
+}
+
+.businesscard{
+    width: 600px; 
+    height: 180px;
+    margin: 20px 26.92%;
+    padding: 10px;
+    border-radius: 40px;
+    
+}
+
+.businesscard table{
+    width: 66%;
+    float: left;
+}
+
+.businesscard p{
+    height: fit-content;
+    width: fit-content;
+}
+.compability{
+    width: 34%;
+    float: right;
+    font-size: 60px;
+    text-align: center;
+    margin: 55px 0px;
+}
+
+#profile_window{
+    width: 600px;
+    height: fit-content;
+    padding: 20px;
+}
+
+#profile_window h1{
+    text-align: center;
+}
+
+#send_message_window{
+    width: 400px;
+    height: fit-content;
+    border:1px solid black;
+    border-radius: 10px;
+    padding: 30px;
+ }
+ 
+textarea{
+    width: 370px;
+    height: 200px;
+    border-radius: 10px;
+ }
+
+ #province{
+    border-radius: 20px;
+    border-style: dashed;
+ }
