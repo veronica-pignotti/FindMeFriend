@@ -19,22 +19,25 @@ var no_results_string = '<p>Attualmente non ci sono persone che corrispondono ai
  * Ad ogni apertura della pagina Home, viene effettuata una ricerca, prendendo come parametri le informazioni e 
  * gli interessi dell'utente.
  */
-function prepareHome() {
-    $.get('/api/getrules', rules =>{
-        rules = JSON.parse(rules);
-        var str ='';
-        for(j = 0; j<2; j++){
-            str += j ==0? "<select id='agemin'>" : "<select id='agemax'>";
-            for(i = rules.min_age_subscribe; i<= rules.max_age_subscribe; i++){
-                str += "<option value='" + i + "'";
-                if((j== 0 & i== rules.min_age_subscribe) | (j == 1 & i== rules.max_age_subscribe)) str += " selected = 'selected'";
-                str += ">" + i + "</option>";
-            }
-            str += "</select>";
-        }        
-        $(str).insertBefore('#btnsearch');
-        search(false);
-    })
+function prepareHome(firstAccess) {
+    if(!firstAccess) search(false);
+    else{
+        $.get('/api/getrules', rules =>{
+            rules = JSON.parse(rules);
+            var str ='';
+            for(j = 0; j<2; j++){
+                str += j ==0? "<select id='agemin'>" : "<select id='agemax'>";
+                for(i = rules.min_age_subscribe; i<= rules.max_age_subscribe; i++){
+                    str += "<option value='" + i + "'";
+                    if((j== 0 & i== rules.min_age_subscribe) | (j == 1 & i== rules.max_age_subscribe)) str += " selected = 'selected'";
+                    str += ">" + i + "</option>";
+                }
+                str += "</select>";
+            }        
+            $(str).insertBefore('#btnsearch');
+            prepareHome(false);
+        })
+    }
 }
 /*******************************************RICERCA*********************************************************************/
 

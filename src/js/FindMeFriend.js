@@ -5,11 +5,11 @@ var visualized_page ='';
 */  
 $(document).ready(
     function(){
-        visualizeHome();
+        visualizeHome(true);
     },
 );
 
-$('#btn_home').click(function(){visualizeHome()});
+$('#btn_home').click(function(){visualizeHome(false)});
 
 $('#btn_profile').click(function(){visualizeProfile()});
 
@@ -17,12 +17,12 @@ $('#btn_profile').click(function(){visualizeProfile()});
 /**
 * Visualizza la pagina home.
 */
-function visualizeHome(){
+function visualizeHome(firstAccess){
     if(visualized_page!='Home') {
         $('#Home').show();
         $('#Profile').hide();
         visualized_page = 'Home';
-        prepareHome();
+        prepareHome(firstAccess);
     }
 };
 
