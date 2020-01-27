@@ -1,23 +1,12 @@
-body{
-    background: url('../../images/orangeyellow.jpg') no-repeat center fixed;
-    background-size: cover;
-}        
-
-h1{
-text-align: center;
-text-decoration-style: double;
-}
-
-
 /* div di login*/
 #accesso{
-
+margin-left: 700px;
 padding: 30px;
-
-margin-left: 100px;
+margin-top: -100px;
+margin-right: 200px;
 border-style: dashed;
 border-color: darkgreen;
-background: url('../../images/greenblue.jpg') ;
+background: url(../../images/greenblue.jpg) ;
 }
 
 
@@ -30,6 +19,7 @@ margin-top: 100px;
 margin-left: 300px;
 font-size: 30px; 
 border-radius: 15px 40px;
+background-color: brown;
 }
 
 
@@ -41,19 +31,21 @@ font-size: 20px;
 text-align: center;
 margin-top: 20px;
 border-radius: 15px 40px;
-
+background-color: darkblue;
 
 }
 
 /*div di ask*/
 #feedback{
-
-padding: 10px;
-size: 5px;
-border-style: dashed;
-border-color: rgb(100, 15, 0);
-background: url(../../images/redyellow.jpg) ;
-background-size: cover;
+    margin-top: -100px;
+    padding: 10px;
+    size: 5px;
+    height: 450px;
+    width: 500px;
+    border-style: dashed;
+    border-color: rgb(100, 15, 0);
+    background: url(../../images/redyellow.jpg);
+    background-size: cover;
 }
 
 #testopresentazionesito{
@@ -92,8 +84,8 @@ font-size: 30px;
 #text{
     min-height: 150px;
     max-height: 150px;
-    min-width: 480px;
-    max-width: 480px;
+    min-width: 430px;
+    max-width: 430px;
     margin-top: 30px;
     margin-left: 10px;
 }
@@ -115,6 +107,13 @@ table{
     margin-left:100px;
     border-spacing: 10px;
     text-align: left;
+    
+}
+
+#interessi{
+
+    margin-left: 700px;
+    margin-top: -200px;
 }
 
 #registration_window{
@@ -126,8 +125,6 @@ table{
     border-radius: 10px;
     background-color: white;
     display: none;
-    
-
 }
 
 
@@ -212,9 +209,4 @@ table{
  #send{
      margin-left: 200px;
      margin-top: 20px;
- }
-
- #pass{
-    border-radius: 10px;
-    font-size: 10px;
  }
