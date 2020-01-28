@@ -69,6 +69,8 @@ function search(isASearch){
             else{
                 results = response.res;
                 visualizeResults();
+                $('#key').val('');
+                $('#province').val('');
             }    
         })
     }

@@ -19,25 +19,24 @@ module.exports.search = (province, word, ageMin, ageMax, response)=>{
 
     var years = check([ageMin, ageMax]);
     
-    var newword ='';
-
     fs.readFile('session.json', (err, data) =>{
         data = JSON.parse(data);
         if (err){ 
             console.log("C'è stato un errore con la lettura del file : " + err);
             response.end(JSON.stringify({code : 0, res :[]}))
-        }else if(word) newword += " AND ( Interest.Name = '" + word + "' OR Key1 = '"+ word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
-        
-        data.Interests.forEach((inter, index) =>{
+        }else if(word) word = " AND ( Interest.Name = '" + word + "' OR Key1 = '"+ word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
+        else{
+            word ='';
+            data.Interests.forEach((inter, index) =>{
 
-            newword += index==0? ' AND (':' OR ';
-            newword +="( Interest.Name = '" + inter.Name + "' OR Key1 = '" + inter.Name + "' OR Key2 = '" + inter.Name + "' OR Key3 = '" + inter.Name + "' OR Key4 = '" + inter.Name + "')";
-            if (index == data.Interests.length-1) newword += ")";
-        })
-
+                word += index==0? ' AND (':' OR ';
+                word +="( Interest.Name = '" + inter.Name + "' OR Key1 = '" + inter.Name + "' OR Key2 = '" + inter.Name + "' OR Key3 = '" + inter.Name + "' OR Key4 = '" + inter.Name + "')";
+                if (index == data.Interests.length-1) word += ")";
+            })
+        }
         province =  "' AND Province = '" + (province? province: data.Province) + "'";
 
-        var select = "SELECT Email, Nickname, Year, Province, Interest.Name AS Name, Key1, Key2, Key3, Key4 FROM Interest JOIN User ON User.Email = Interest.User WHERE User.Email <> '" + data.Email + province + newword + years;
+        var select = "SELECT Email, Nickname, Year, Province, Interest.Name AS Name, Key1, Key2, Key3, Key4 FROM Interest JOIN User ON User.Email = Interest.User WHERE User.Email <> '" + data.Email + province + word + years;
 
         connection.query(select, (err, result) => {
 

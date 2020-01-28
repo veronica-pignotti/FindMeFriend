@@ -54,7 +54,7 @@ var hbe = require('./src/js/HomeBE');
 app.get(['/api/getrules'], (req, res) =>{ res.end(JSON.stringify(rules))});
 
 app.get(['/api/search/:province/:word/:yearMin/:yearMax'], (req, res) =>{
-  var province = req.params.province == 'null'? null : req.params.province.toUpperCase();
+  var province = req.params.province == 'null'? null : req.params.province;
   var word = req.params.word == 'null'? null : req.params.word;
   var min = req.params.min == 'null'? null : req.params.yearMin;
   var max = req.params.max == 'null'? null: req.params.yearMax;
