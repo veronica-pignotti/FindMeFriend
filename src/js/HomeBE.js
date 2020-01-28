@@ -5,13 +5,12 @@ var fs = require('fs');
 /**
 * Ritorna il risultato della ricerca con i parametri inseriti.
 * Se l'utente non specifica la provincia in cui cercare, viene presa in considerazione quella dell'utente stesso.
-* Se l'utente non specifica la parola chiave, vengono presi in considerazione i nomi dei suoi interessi. In tal caso 
-* verranno selezionate tutte le istanze che nei loro interessi (nel nome e nelle parole chiave) hanno i nomi degli 
-* interessi dell'utente.
-* Vengono inoltre controllati i valori dell'età.
+* Se l'utente specifica la parola chiave, viene presa in considerazione nella ricerca.
+* Si considerano, inoltre, i nomi dei suoi interessi: verranno selezionate tutte le istanze che nei loro 
+* interessi (nel nome e nelle parole chiave) hanno i nomi degli interessi dell'utente.
+* Vengono infine controllati i valori dell'età.
 * @param province : la provincia inserita dall'utente. Se non presente, viene considerata quella dell'utente stesso.
-* @param word : la parola chiave inserita dall'utente. Se non presente, si effettua una ricerca considerando tutti i nomi
-* degli interessi dell'utente stesso.
+* @param word : la parola chiave inserita dall'utente.
 * @param ageMin : l'età minima di ricerca inserita dall'utente.
 * @param ageMax: l'età massima di ricerca inserita dall'utente.
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
@@ -20,25 +19,25 @@ module.exports.search = (province, word, ageMin, ageMax, response)=>{
 
     var years = check([ageMin, ageMax]);
     
+    var newword ='';
+
     fs.readFile('session.json', (err, data) =>{
         data = JSON.parse(data);
         if (err){ 
             console.log("C'è stato un errore con la lettura del file : " + err);
             response.end(JSON.stringify({code : 0, res :[]}))
-        }else if(word) word = " AND ( Interest.Name = '" + word + "' OR Key1 = '"+ word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
-        else {
-            word = "";
-            data.Interests.forEach((inter, index) =>{
+        }else if(word) newword += " AND ( Interest.Name = '" + word + "' OR Key1 = '"+ word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
+        
+        data.Interests.forEach((inter, index) =>{
 
-                word += index==0? ' AND (':' OR ';
-                word +="( Interest.Name = '" + inter.Name + "' OR Key1 = '" + inter.Name + "' OR Key2 = '" + inter.Name + "' OR Key3 = '" + inter.Name + "' OR Key4 = '" + inter.Name + "')";
-                if (index == data.Interests.length-1) word += ")";
-            })
-        }
+            newword += index==0? ' AND (':' OR ';
+            newword +="( Interest.Name = '" + inter.Name + "' OR Key1 = '" + inter.Name + "' OR Key2 = '" + inter.Name + "' OR Key3 = '" + inter.Name + "' OR Key4 = '" + inter.Name + "')";
+            if (index == data.Interests.length-1) newword += ")";
+        })
 
         province =  "' AND Province = '" + (province? province: data.Province) + "'";
 
-        var select = "SELECT Email, Nickname, Year, Province, Interest.Name AS Name, Key1, Key2, Key3, Key4 FROM Interest JOIN User ON User.Email = Interest.User WHERE User.Email <> '" + data.Email + province + word + years;
+        var select = "SELECT Email, Nickname, Year, Province, Interest.Name AS Name, Key1, Key2, Key3, Key4 FROM Interest JOIN User ON User.Email = Interest.User WHERE User.Email <> '" + data.Email + province + newword + years;
 
         connection.query(select, (err, result) => {
 
@@ -53,6 +52,11 @@ module.exports.search = (province, word, ageMin, ageMax, response)=>{
     })
 }
 
+/**
+ * Converte e ordina l'array di età passato passato e produce una stringa in base a questi valori, da 
+ * inserire nella chiamata al database.
+ * @param {int[]} arr : l'array contenente l'età minima e l'età massima.
+ */
 function check(arr) {
     var current = new Date().getFullYear();
     for(i = 0; i < 2; i++) arr[i] = current - arr[i];
@@ -62,7 +66,7 @@ function check(arr) {
 
 /**
 * Ritorna una tabella contenente le informazioni che dovranno essere visualizzate nei risultati della Home.
-* La tabella "interested_people" ha come colonne: Email, Name, Surname, Nickname, Year, Province, Interest.Name, Key1, Key2, Key3, Key4, Description.
+* La tabella "interested_people" ha come colonne: Email, Nickname, Year, Province, Interest.Name, Key1, Key2, Key3, Key4.
 * La tabella "user_interests" ha come colonne Interest.Name, Key1, Key2, Key3, Key4, Description.
 */
 function extractCommonInterests(interested_people, user_interests, response){
@@ -98,6 +102,11 @@ function extractCommonInterests(interested_people, user_interests, response){
    
 /*-------------------------------------VISUALIZZA PROFILO---------------------------------------------------------------------- */
 
+/**
+ * Ritorna le informazioni mancanti per visualizzare il profilo di @param email.
+ * @param {string} email : l'email del profilo in cui bisogna estrarre le informazioni mancanti.
+ * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
+ */
 module.exports.getMissingInformations = (email, response)=>{
     var obj;
     var mess;
@@ -115,4 +124,3 @@ module.exports.getMissingInformations = (email, response)=>{
         response.end(JSON.stringify({message: mess, object: obj}));
     })
 }
-//----------------------------------------------------------------------------------------------------------------

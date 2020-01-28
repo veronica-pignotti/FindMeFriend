@@ -19,6 +19,9 @@ function prepareProfile(){
     }
 };
 
+/**
+ * Costruisce il template per le informazioni.
+ */
 function showInformations(){
     template_informations = "<table><tr><th><span>Nome: </span></th><td><p>"+session.Name+"</p></td></tr>"+
         "<tr><th><span>Cognome: </span></th><td><p>"+session.Surname+"</p></td></tr>"+
@@ -28,6 +31,9 @@ function showInformations(){
     $('#informations').html(template_informations);    
 }
 
+/**
+ * Costruisce il template per gli interessi.
+ */
 function showInterests() {
     template_interests = "<h1>Interessi</h1><table>"
     session.Interests.forEach((inter, index)=>{
@@ -43,10 +49,11 @@ function showInterests() {
         $('#interests').html(template_interests);
     })
 }
+
 /*******************************************MODIFICA ELEMENTO*************************************************************/
 /**
-* Al doppio click fatto sugli elementi che si possono modificare, con la classe enabled, fa apparire la finestra per la 
-* modifica dell'elemento.
+* Al doppio click fatto sugli elementi che si possono modificare, fa apparire la finestra per la modifica 
+* dell'elemento.
 */
 function set(item){
     $('#set_window').show();
@@ -124,7 +131,7 @@ $('#add_interest_add_button').click(function(){
 /*******************************************ELIMINA INTERESSE*************************************************************/
 
 /**
-* Permette di cancellare l'interesse
+* Permette di cancellare l'interesse.
 */
 function deleteInterest(index){
     $('#delete_interest_window').show();
@@ -133,6 +140,9 @@ function deleteInterest(index){
     last_item = index;
 }
 
+/**
+ * Avvia la cancellazione dell'interesse.
+ */
 $('#delete_interest_yes_button').click(function(){
     $('#delete_interest_window').hide();
     $.ajax({
@@ -149,12 +159,17 @@ $('#delete_interest_yes_button').click(function(){
 
 /*******************************************ELIMINA PROFILO***************************************************************/
 
+/**
+ * Apre una finestra per la cancellazione dell'account.
+ */
 $('#delete_profile_btn').click(function(){
     $('#delete_profile_window').show();
 });
 
+/**
+ * Avvia la cancellazione dell'account.
+ */
 $('#delete_profile_yes_btn').click(function(){
-
 
     $('#delete_profile_window').hide();
     $.ajax({
@@ -174,10 +189,17 @@ $('#delete_profile_yes_btn').click(function(){
 
 /*******************************************CAMBIA PASSWORD***************************************************************/
 
+/**
+ * Apre una finestra per la modifica della password.
+ */
 $('#set_password_btn').click(function(){
     $('#set_password_window').show();
 });
 
+/**
+ * Effettua i controlli necessari e se non ci sono errori, avvia la modifica della password, altrimenti 
+ * visualizza un messaggio di errore.
+ */
 $('#set_password_ok_btn').click(function(){
     $('#set_password_message').text('');
     var old_password = $('#old_password_input').val();
@@ -202,6 +224,11 @@ $('#set_password_ok_btn').click(function(){
     }
 });
 /***********************************************FUNCTIONS****************************************************************/
+/**
+ * Aggiorna una sezione della sessione in locale prendendoli dal file session.json.
+ * Se @param section == 0, si deve aggiornare le informazioni, altrimenti gli interessi.
+ * @param {int} section : indica la sezione da aggiornare: 0 per le informazioni, 1 per gli interessi.
+ */
 function updateSession(section){
     $.get('/api/getsession', s =>{  
         session = JSON.parse(s);

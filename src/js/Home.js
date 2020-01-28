@@ -18,6 +18,7 @@ var no_results_string = '<p>Attualmente non ci sono persone che corrispondono ai
 /**
  * Ad ogni apertura della pagina Home, viene effettuata una ricerca, prendendo come parametri le informazioni e 
  * gli interessi dell'utente.
+ * @param {boolean} firstAccess : indica se il metodo è invocato al primo accesso.
  */
 function prepareHome(firstAccess) {
     if(!firstAccess) search(false);

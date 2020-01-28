@@ -1,35 +1,32 @@
 body{
     background: url('../../images/orangeyellow.jpg') no-repeat center fixed;
     background-size: cover;
+    height: fit-content;
+    padding: 10px;
 }        
 
 h1{
-text-align: center;
-text-decoration-style: double;
+    text-align: center;
+    text-decoration-style: double;
 }
 
 
 /* div di login*/
 #accesso{
-
-padding: 30px;
-
-margin-left: 100px;
-border-style: dashed;
-border-color: darkgreen;
-background: url('../../images/greenblue.jpg') ;
+    padding: 30px;
+    margin-left: 100px;
+    border-style: dashed;
+    border-color: darkgreen;
+    background: url('../../images/greenblue.jpg');
 }
-
-
-
-
 
 /*bottone di registrazione*/
 #registration_btn {
-margin-top: 100px;
-margin-left: 300px;
-font-size: 30px; 
-border-radius: 15px 40px;
+    margin-top: 100px;
+    margin-left: 300px;
+    font-size: 30px; 
+    border-radius: 15px 40px;
+    background-color: brown;
 }
 
 
@@ -37,56 +34,49 @@ border-radius: 15px 40px;
 
 /*bottone di login*/
 #loginbtn{
-font-size: 20px;
-text-align: center;
-margin-top: 20px;
-border-radius: 15px 40px;
-
-
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 15px 40px;
+    background-color: darkblue;
 }
 
 /*div di ask*/
 #feedback{
-
-padding: 10px;
-size: 5px;
-border-style: dashed;
-border-color: rgb(100, 15, 0);
-background: url(../../images/redyellow.jpg) ;
-background-size: cover;
+    padding: 10px;
+    size: 5px;
+    border-style: dashed;
+    border-color: rgb(100, 15, 0);
+    background: url(../../images/redyellow.jpg) ;
+    background-size: cover;
 }
 
 #testopresentazionesito{
-text-align: center;
-font-family: "Times New Roman", Times, serif;
-font-size: 30px;
-
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
 }
 
 #loginemail{
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     font-size: 20px;
-
 }
 
 #loginpassword{
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     font-size: 20px;
-
 }
 
 #mitt{
     border-radius: 10px;
     font-size: 10px;
-   
 }
 
 #obj{
     border-radius: 10px;
     font-size: 10px;
-    
 }
 
 #text{
@@ -126,8 +116,7 @@ table{
     border-radius: 10px;
     background-color: white;
     display: none;
-    
-
+    position: absolute;
 }
 
 
@@ -135,7 +124,6 @@ table{
     margin-left: 350px;
     margin-top: -50px;
     font-size: 30px;
-
 }
 
 #la{
@@ -172,29 +160,24 @@ table{
 #regnickname{
     margin-left: 100px;
      border-radius: 20px;
-     
 }
 
 #regpassword{
-    border-radius: 20px;
-   
+    border-radius: 20px;  
 }
 
 #regrepeatpassword{
     margin-left: 100px;
      border-radius: 20px;
-     
 }
 
 #regemail{
-    border-radius: 20px;
-   
+    border-radius: 20px;  
 }
 
 #regprovincie{
     margin-left: 100px;
     border-radius: 20px;
-    
 }
 
 #userlogo{

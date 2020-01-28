@@ -15,7 +15,7 @@ $('#btn_profile').click(function(){visualizeProfile()});
 
     
 /**
-* Visualizza la pagina home.
+* Visualizza la pagina Home.
 */
 function visualizeHome(firstAccess){
     if(visualized_page!='Home') {

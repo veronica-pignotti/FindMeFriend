@@ -110,12 +110,6 @@ table{
     
 }
 
-#interessi{
-
-    margin-left: 700px;
-    margin-top: -200px;
-}
-
 #registration_window{
     margin-top: -550px;
     margin-left: 340px ;
@@ -125,6 +119,7 @@ table{
     border-radius: 10px;
     background-color: white;
     display: none;
+    position: absolute;
 }
 
 
