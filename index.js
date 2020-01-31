@@ -1,4 +1,4 @@
-/*************************************************GENERAL****************************************************************/
+/********************************************GENERAL VARIABLES************************************************/
 
 var express = require('express');
 var fs = require('fs');
@@ -17,27 +17,24 @@ const rules = {
   max_age_subscribe : 30
 }
 
-
 module.exports.rules = rules;
-/*************************************************GENERAL API REST********************************************************/
+/*************************************************GENERAL API REST********************************************/
 app.use(express.static('src'));
 
 app.get(['/'], (req, res) => {
   fs.writeFile('session.json', "In questo file verranno memorizzati, in formato JSON, i dati della tua sessione.", () =>{res.redirect("Welcome.html");});
 });
 
-/*****************************************************SESSION************************************************************/
+/*****************************************************SESSION*************************************************/
 
 app.get(['/api/getsession'], (req,res)=>{ 
   fs.readFile('session.json', (err, s) =>{res.end(s)});
 });
 
 
-/***************************************WELCOME************************************************************************/
+/***************************************WELCOME***************************************************************/
 var wbe = require('./src/js/WelcomeBE');
-var db = require('./src/js/Database');
 
-/**REGISTRATION */
 app.post(['/api/insertuser/:email/:password/:name/:surname/:nickname/:year/:province'], (req,res)=>{
   wbe.insertUser(req.params.email, req.params.password, req.params.name, req.params.surname, req.params.nickname, req.params.year, req.params.province, res);
 });
@@ -46,9 +43,7 @@ app.get(['/api/authentication/:email/:password'], (req, res)=>{
   wbe.authentication(req.params.email, req.params.password, res);
 })
 
-app.get(['/api/getrules'], (req, res) =>{res.end(JSON.stringify(rules))})
-
-/****************************************HOME**************************************************************************/
+/****************************************HOME*****************************************************************/
 var hbe = require('./src/js/HomeBE');
 
 app.get(['/api/getrules'], (req, res) =>{ res.end(JSON.stringify(rules))});
@@ -66,7 +61,7 @@ app.get(['/api/getmissinginformations/:email'], (req, res) =>{
 })
 
 
-/****************************************PROFILE***********************************************************************/
+/****************************************PROFILE**************************************************************/
 var pbe = require('./src/js/ProfileBE');
 
 app.post(['/api/addinterest/:email/:name/:key1/:key2/:key3/:key4/:description'], (req, res)=>{
@@ -94,13 +89,10 @@ app.put(['/api/setpassword/:old/:new/:email'], (req, res) =>{
   pbe.setPasswordUpdate(req.params.old, req.params.new, req.params.email, res);
 })
 
-/****************************************EMAIL****************************************************************************/
+/****************************************EMAIL***************************************************************/
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post(['/api/sendemail'], (req, res) =>{ 
-  console.log("sono in app post");
-  //console.log("req.body = " + req.body);
-  
   require('./src/js/Email').sendEmail(req.body, res);
 })

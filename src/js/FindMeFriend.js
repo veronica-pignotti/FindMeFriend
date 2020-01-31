@@ -19,10 +19,8 @@ $('#btn_profile').click(function(){visualizeProfile()});
 */
 function visualizeHome(firstAccess){
     if(visualized_page!='Home') {
-        $('#Home').show();
-        $('#Profile').hide();
         visualized_page = 'Home';
-        prepareHome(firstAccess);
+        $('#content').load('Home.html');
     }
 };
 
@@ -31,16 +29,7 @@ function visualizeHome(firstAccess){
 */
 function visualizeProfile(){
     if(visualized_page!='Profile') {
-        $('#Home').hide();
-        $('#Profile').show();
         visualized_page = 'Profile';
-        prepareProfile();
+        $('#content').load('Profile.html');
     }
 };
-
-/**
-* Al click dei bottoni Annulla/No, la finestra a cui appartiene il bottone si chiude.
-*/
-$('.cancel_btn').click(function(){
-    $(this).parent().parent().hide();
-})

@@ -15,6 +15,10 @@ var index_recipient;
  */
 var no_results_string = '<p>Attualmente non ci sono persone che corrispondono ai tuoi dati di ricerca.</p>';
 
+$(document).ready(function(){
+    prepareHome(true);
+})
+
 /**
  * Ad ogni apertura della pagina Home, viene effettuata una ricerca, prendendo come parametri le informazioni e 
  * gli interessi dell'utente.
@@ -96,7 +100,6 @@ function visualizeResults(){
 /**
 * Apre la finestra per inviare un messaggio alla persona corrispondente al risultato selezionato.
 * @param {int} index: indice del risultato.
-
 */
 function send(index){
     $('#send_message_window').show();
@@ -156,4 +159,11 @@ $('#send_btn').click(function(){
             }
         })
     }
+})
+
+/**
+* Al click dei bottoni chiudi, la finestra a cui appartiene il bottone si chiude.
+*/
+$('.cancel_btn').click(function () {
+    $(this).parent().parent().hide();
 })

@@ -3,6 +3,7 @@ var template_interests = '';
 var last_item = '';
 var session;
 
+$(document).ready(function(){prepareProfile()})
 /**
  * Compone il template per il profilo, compilandolo in base ai dati della sessione.
  */
@@ -236,3 +237,10 @@ function updateSession(section){
         else showInformations();
     })
 }
+
+/**
+* Al click dei bottoni Annulla/No, la finestra a cui appartiene il bottone si chiude.
+*/
+$('.cancel_btn').click(function () {
+    $(this).parent().parent().hide();
+})
