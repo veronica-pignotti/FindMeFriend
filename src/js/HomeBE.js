@@ -1,5 +1,6 @@
 var connection = require("./Database").connection;
 var fs = require('fs');
+var security = require('./Security');
 
 /***********************************************RICERCA*******************************************************************/
 /**
@@ -139,7 +140,7 @@ module.exports.getMissingInformations = (email, response) => {
         } else {
             mess = '';
             obj = { Name: res[0].UserName, Surname: res[0].Surname, Interests: [] };
-            res.forEach(row => { obj.Interests.push({ Name: row.InterName, Description: row.Description }) });
+            res.forEach(row => { obj.Interests.push({ Name: security.decodeString(row.InterName), Description: security.decodeString(row.Description) }) });
         }
         response.end(JSON.stringify({ message: mess, object: obj }));
     })

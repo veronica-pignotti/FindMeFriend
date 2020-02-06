@@ -1,5 +1,4 @@
 /*****************************************LOGIN*****************************************************************/
-
 /**
 * Se i dati inseriti sono corretti, effettua il login, altrimenti visualizza un messaggio di errore.
 */
@@ -21,7 +20,14 @@ $('#loginbtn').click(function(){
 
 /*****************************************REGISTRATION*****************************************************************/
 
-$('#registration_btn').click(function(){$('#registration_window').show()});
+$('#registration_btn').click(function(){
+    $('#registration_window').show();
+    $.get('/api/getrules', rules =>{
+        rules = JSON.parse(rules);
+        $('#regyear').attr('min', new Date().getFullYear() - rules.min_age_subscribe);
+        $('#regyear').attr('max', new Date().getFullYear() - rules.max_age_subscribe);
+    });
+});
 
 /**
 * Registra l'utente solo se tutti i campi della registrazione sono compilati nel giusto modo, rispettando i seguenti vincoli:
@@ -44,7 +50,16 @@ $('#btnregistration').click(function(){
     else {
         if(password != repeat_password) $('#reg_message').text("Le password devono coincidere!");
         else{
-            $.post('/api/insertuser/' + email +'/'+ password+'/'+ name+'/'+ surname+'/'+ nickname+'/'+ year+'/'+ province, (res)=>{
+            var obj = {
+                email : email,
+                password: password,
+                name: name,
+                surname: surname,
+                nickname: nickname,
+                year: year,
+                province: province
+            }
+            $.post('/api/insertuser', obj, (res)=>{
                 $('#reg_message').text(JSON.parse(res).message);
             });    
         }

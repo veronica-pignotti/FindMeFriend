@@ -102,21 +102,27 @@ $('#btn_add_interest').click(function(){$('#add_interest_window').show()});
 * Al click sul bottone aggiungi, si effettuano i controlli necessari per l'aggiunta di tale interesse.
 */
 $('#add_interest_add_button').click(function(){
-    var name = $('#new_name').val(); 
-    var keys = [$('#new_key1').val() , $('#new_key2').val() , $('#new_key3').val() , $('#new_key4').val()];
-    var description = $('#new_description').val();
-    if(name == '' | description == '' | (keys[0]=='' & keys[1]=='' & keys[2]=='' & keys[3]=='')) $('#add_interest_message').text('Inserisci il nome che identifica il tuo interesse, la sua descrizione e almeno una parola chiave.');
+    var interest ={
+        name : $('#new_name').val(),
+        keys : [$('#new_key1').val() , $('#new_key2').val() , $('#new_key3').val() , $('#new_key4').val()],
+        description : $('#new_description').val()
+    }
+
+    if(
+        interest.name == '' | interest.description == '' | 
+        (interest.keys[0]=='' & interest.keys[1]=='' & interest.keys[2]=='' & interest.keys[3]=='')
+    ) $('#add_interest_message').text('Inserisci il nome che identifica il tuo interesse, la sua descrizione e almeno una parola chiave.');
     else{
         
         for(i = 0; i < 4; i++){ 
-            if(keys[i] == '') {// sposta gli elementi vuoti alla fine e li rimpiazza con la stringa null
-                keys.splice(i,1);
-                keys.push('null');
+            if(interest.keys[i] == '') {// sposta gli elementi vuoti alla fine e li rimpiazza con la stringa null
+                interest.keys.splice(i,1);
+                interest.keys.push('null');
                 i--; 
             }
         }
-        
-        $.post('/api/addinterest/' + session.Email +'/' + name + '/' + keys.join('/') +'/'+ description, (res) =>{
+         
+        $.post('/api/addinterest/' + session.Email , interest, (res) =>{
             res = JSON.parse(res);
             $('#add_interest_message').text(res.message);
             if(res.length == 10) $('#add_interest_button').hide();

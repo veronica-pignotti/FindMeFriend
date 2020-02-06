@@ -1,5 +1,6 @@
 var connection = require('./Database').connection;
 const rules = require('../../index').rules;
+var security = require('./Security');
 
 /*************************************************LOGIN*****************************************************************/
 
@@ -11,14 +12,17 @@ const rules = require('../../index').rules;
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.authentication = (email, password, response) => {
-    connection.query("SELECT Email, Name, Surname, Nickname, Year, Province FROM User WHERE Email = '" + email + "' AND Password = '" + this.encodePassword(password) + "'", (err, resQuery) => {
-        var str = "";
+    connection.query("SELECT Email, Name, Surname, Nickname, Year, Province FROM User WHERE Email = '" + email + "' AND Password = '" + security.encodePassword(password) + "'", (err, resQuery) => {
+        var obj;
         if(err){
             console.log("Si è verificato un errore durante l'autenticazione: " + err);
-            str = "Si è verificato un errore durante l'autenticazione.";
-        } else if(resQuery.length == 0) str = "I dati inseriti non sono corretti oppure non sei ancora registrato.";
-        else createSession(resQuery[0])
-        response.end(JSON.stringify({message:str}));
+            obj = {code : 500, message : "Si è verificato un errore durante l'autenticazione."};
+        } else if(resQuery.length == 0) obj = {code : 401, message : "I dati inseriti non sono corretti oppure non sei ancora registrato."};
+        else{
+            createSession(resQuery[0])
+            obj = {code :202, message: ""};
+        } 
+        response.end(JSON.stringify(obj));
     });
 }
 
@@ -48,40 +52,28 @@ function createSession(obj){
 
 /**
 * Prova ad eseguire l'insert nel database con i parametri passati e restituisce un JSON contenente un messaggio.
-* Se presenti, gli apostrofi (') vengono convertiti nella stringa "[39]".
 * L'utente deve avere un'età compresa tra rules.min_age_subscribe e rules.max_age_subscribe.
 * Gli errori inerenti all'inserimento di tale nuova istanza vengono captati sfruttando i vincoli del database User: 
 * - ogni email è chiave primaria, quindi non possono esistere due istanze aventi lo stesso campo Email
 * - ogni nickname deve essere unico, quindi, nel caso di inserimento di un nickname uguale ad uno già presente, viene lanciato un errore.
 */
-module.exports.insertUser = (email, password, name, surname, nickname, year, province, response)=>{
+module.exports.insertUser = (user, response)=>{
+    user = security.checkUser(user);
+    if(!user) response.end({code:205, message: 'Non puoi inserire i simboli <, >, "'});
 
-    if(surname.indexOf("'") != -1 ) surname = (surname.split("'")).join("[39]");
-    if(nickname.indexOf("'") != -1 ) nickname = (nickname.split("'")).join("[39]");
-
-    var user_age = new Date().getFullYear() - year;
+    var user_age = new Date().getFullYear() - user.year;
     if(user_age < rules.min_age_subscribe | user_age > rules.max_age_subscribe ) response.end(JSON.stringify({message : "Mi dispiace! Devi avere un'età copresa tra i 18 e i 30 per iscriverti!"}));
     else{
-        var insert = "INSERT INTO User (Email, Password, Name, Surname, Nickname, Year, Province) VALUES ( '" + email + "', '" + this.encodePassword(password) + "', '" +  name +"', '" + surname+"', '" + nickname+"', " + year+", '" + province + "');";
+        var insert = "INSERT INTO User (Email, Password, Name, Surname, Nickname, Year, Province) VALUES ( '" + user.email + "', '" + security.encodePassword(user.password) + "', '" +  user.name +"', '" + user.surname+"', '" + user.nickname+"', " + user.year+", '" + user.province + "');";
         connection.query(insert, (err) => { 
+            var obj;
             if (err) {
                 console.log(err);
-                if(err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + email)!= -1) str = "L'email inserita corrisponde ad un account già registrato!";
-                else if(err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + nickname)!= -1) str = "Nickname già utilizzato! Inserisci un altro nickname!";
-                else str = "Si è verificato un errore durante la connessione con il database.";
-            } else{ 
-                str ="La tua registrazione è andata a buon fine!";
-                response.end(JSON.stringify({message: str}));
-            }
+                if(err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + user.email)!= -1) obj = {code: 205, message: "L'email inserita corrisponde ad un account già registrato!"};
+                else if(err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + user.nickname)!= -1) obj = {code: 205, message: "Nickname già utilizzato! Inserisci un altro nickname!"};
+                else obj = {code : 500, message : "Si è verificato un errore durante la connessione con il database."};
+            } else obj = {code: 201, message:str ="La tua registrazione è andata a buon fine!"};
+            response.end(JSON.stringify(obj));
         });
     }
 };
-
-/**
- * Cripta la password @param password utilizzando l'algoritmo SHA256.
- * @param password : la password da criptare.
- * @returns la password criptata.
- */
-module.exports.encodePassword = (password)=>{
-    return require('crypto').createHash('sha256').update(password).digest('hex');
-}
