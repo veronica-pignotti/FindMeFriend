@@ -25,16 +25,19 @@ module.exports.search = (province, word, ageMin, ageMax, response) => {
         if (err) {
             console.log("C'è stato un errore con la lettura del file : " + err);
             response.end(JSON.stringify({ code: 0, res: [] }))
-        } else if (word) word = " AND ( Interest.Name = '" + word + "' OR Key1 = '" + word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
-        else {
+        } else if(word){
+            word = security.checkString(word);
+            word = " AND ( Interest.Name = '" + word + "' OR Key1 = '" + word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
+        }else {
             flag = false;
             word = '';
-            data.Interests.forEach((inter, index) => {
-
-                word += index == 0 ? ' AND (' : ' OR ';
-                word += "( Interest.Name = '" + inter.Name + "' OR Key1 = '" + inter.Name + "' OR Key2 = '" + inter.Name + "' OR Key3 = '" + inter.Name + "' OR Key4 = '" + inter.Name + "')";
-                if (index == data.Interests.length - 1) word += ")";
-            })
+            if(data.Interests.length!=0){
+                data.Interests.forEach((inter, index) => {
+                    word += index == 0 ? ' AND (' : ' OR ';
+                    word += "( Interest.Name = '" + inter.Name + "' OR Key1 = '" + inter.Name + "' OR Key2 = '" + inter.Name + "' OR Key3 = '" + inter.Name + "' OR Key4 = '" + inter.Name + "')";
+                    if (index == data.Interests.length - 1) word += ")";
+                })
+            }
         }
         province = "' AND Province = '" + (province ? province : data.Province) + "'";
 
@@ -99,7 +102,7 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
                 currentEmail = row.User;
                 table.push({
                     Email: currentEmail,
-                    Nickname: row.Nickname,
+                    Nickname: security.decodeString(row.Nickname),
                     Year: row.Year,
                     Province: row.Province,
                     Compatibility: 0,
@@ -107,12 +110,18 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
                 });
             }
 
-            user_interests.forEach(inter => {
-                var name = inter.Name;
-                if (name == row.Name | name == row.Key1 | name == row.Key2 | name == row.Key3 | name == row.Key4) table[table.length - 1].CommonInterests.push(name);
-            });
+            if(user_interests.length!=0){
+                var name;
+                user_interests.forEach(inter => {
+                    name = inter.Name;
+                    if (name == row.Name | name == row.Key1 | name == row.Key2 | name == row.Key3 | name == row.Key4) {
+                        table[table.length - 1].CommonInterests.push(security.decodeString(name) + currentEmail);
+                    }
+                });
+                table.forEach(r => { r.Compatibility = Math.round(r.CommonInterests.length * 100 / user_interests.length) });
+            } 
         })
-        table.forEach(r => { r.Compatibility = Math.round(r.CommonInterests.length * 100 / user_interests.length) });
+        
         table.sort((a, b) => {
             return a.Compatibility > b.Compatibility ? -1 : (a.Compatibility < b.Compatibility ? 1 : 0);
         });

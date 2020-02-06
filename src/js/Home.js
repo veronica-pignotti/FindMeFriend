@@ -84,16 +84,18 @@ function search(isASearch){
 * Prepara e visualizza il template per la sezione dei risultati di ricerca.
 */
 function visualizeResults(){
-    if(results.length == 0) template_home = no_results_string;
+    if(results.length == 0) $('#results_research').text(no_results_string);
     else{
         var color;
+        $('#results_research').html('');
         template_home ='';
         results.forEach(function(res, index){
             color = res.Compatibility < 34? 'red': res.Compatibility < 64? '#FFCC00': 'green';
-            template_home += " <div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'><table><tr><th><span>NickName :</span></th><td><p>"+ res.Nickname + "</p></td></tr><tr><th><span>Anno di nascita :</span></th><td><p>" + res.Year + "</p></td></tr><tr><th><span>Provincia :</span></th><td><p>" + res.Province + "</p></td></tr><tr><th><span>Interessi in comune :</span></th></tr><td><p>"+ res.CommonInterests +"</p></td></table><div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>"    
+            //template_home += " <div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'><table><tr><th><span>NickName :</span></th><td><p>"+ res.Nickname + "</p></td></tr><tr><th><span>Anno di nascita :</span></th><td><p>" + res.Year + "</p></td></tr><tr><th><span>Provincia :</span></th><td><p>" + res.Province + "</p></td></tr><tr><th><span>Interessi in comune :</span></th></tr><td><p>"+ res.CommonInterests +"</p></td></table><div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>"    
+            $('#results_research').append(" <div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'><table><tr><th><span>NickName :</span></th><td><p>"+ res.Nickname + "</p></td></tr><tr><th><span>Anno di nascita :</span></th><td><p>" + res.Year + "</p></td></tr><tr><th><span>Provincia :</span></th><td><p>" + res.Province + "</p></td></tr><tr><th><span>Interessi in comune :</span></th></tr><td><p>"+ res.CommonInterests +"</p></td></table><div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>" );
         });
     }
-    $('#results_research').html(template_home);
+//$('#results_research').html(template_home);
 };
 
 /*******************************************BIGLIETTO DA VISITA*********************************************************/

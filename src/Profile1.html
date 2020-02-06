@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <title>Find Me, Friend : Profile</title>
+    <link href="./css/Profile.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Informazioni</h1>
+    <div id='informations'></div>
+    <div id='interests'></div>
+    <input type="button" value="Aggiungi Interesse" id="btn_add_interest">
+    <input type="button" value="Cancella profilo" id="delete_profile_btn">
+    <input type="button" value="Modifica password" id="set_password_btn">
+
+    <!--SET WINDOW-->
+    <div id="set_window" class='action_window' style="border:  1px black solid;width: 200px;height: 80px;">
+        <input type="text" id="set_window_input">
+        <p>
+            <input type="button" id="set_window_ok_button" value="Conferma">
+            <input type="button" class="cancel_btn" value="Annulla">
+        </p>
+    </div>
+
+    <!--ADD INTEREST WINDOW-->
+    <div id="add_interest_window" class='action_window'>
+        <p>Inserisci un interesse <p id="add_interest_message"></p>
+        </p>
+        <input type="text" id="new_name">
+        <p>1-Inserisci fino a 4 parole chiave:</p>
+        <list>
+            <ol>
+                <li><input type="text" id="new_key1"></li>
+                <li><input type="text" id="new_key2"></li>
+                <li><input type="text" id="new_key3"></li>
+                <li><input type="text" id="new_key4"></li>
+            </ol>
+        </list>
+        <textarea id="new_description"></textarea>
+        <p>
+            <input type="button" value="Aggiungi interesse" id="add_interest_add_button">
+            <input type="button" value="Annulla" class="cancel_btn">
+        </p>
+    </div>
+
+    <!--DELETE INTEREST WINDOW-->
+    <div id="delete_interest_window" class='action_window'>
+        <div id='delete_interest_window_interest'></div>
+        <p>Sei sicuro di voler eliinare questo interesse?</p>
+        <p>
+            <input type="button" value="Si" id="delete_interest_yes_button">
+            <input type="button" value="No" class="cancel_btn">
+        </p>
+    </div>
+    </div>
+
+    <!--DELETE PROFILE WINDOW-->
+    <div id="delete_profile_window" class='action_window'>
+        <p>Sicuro di voler cancellare il tuo profilo?</p>
+        <p>
+            <input value="Si" type="button" id="delete_profile_yes_btn">
+            <input value="No" type="button" class="cancel_btn">
+        </p>
+    </div>
+    <!--SET PASSWORD-->
+    <div id="set_password_window" class='action_window'>
+        <p>Vecchia password: <input type="password" id="old_password_input"></p>
+        <p>Nuova password: <input type="password" id="new_password_input"></p>
+        <p>Ripeti nuova password: <input type="password" id="repeat_new_password_input"></p>
+        <p>
+            <input type="button" id="set_password_ok_btn" value="Conferma">
+            <input type="button" class="cancel_btn" value="Annulla">
+        </p>
+        <p id="set_password_message"></p>
+    </div>
+    </div>
+    <!--chiude profilo-->
+    <!--------------------------------------END PROFILE-------------------------------------------------------->
+    </div>
+    <!--chiude content-->
+    <script src="../js/Profile.js"></script>
+</body>
+
+</html>
