@@ -69,7 +69,7 @@ function search(isASearch){
     else{
         $.get('/api/search/' + pr + "/" + k +"/" + min + "/" + max, response =>{
             response = JSON.parse(response);
-            if(response.code == 0) $('#results_research').html(template_home);
+            if(response.code != 200) $('#results_research').html(template_home);
             else{
                 results = response.res;
                 visualizeResults();
@@ -91,11 +91,9 @@ function visualizeResults(){
         template_home ='';
         results.forEach(function(res, index){
             color = res.Compatibility < 34? 'red': res.Compatibility < 64? '#FFCC00': 'green';
-            //template_home += " <div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'><table><tr><th><span>NickName :</span></th><td><p>"+ res.Nickname + "</p></td></tr><tr><th><span>Anno di nascita :</span></th><td><p>" + res.Year + "</p></td></tr><tr><th><span>Provincia :</span></th><td><p>" + res.Province + "</p></td></tr><tr><th><span>Interessi in comune :</span></th></tr><td><p>"+ res.CommonInterests +"</p></td></table><div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>"    
             $('#results_research').append(" <div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'><table><tr><th><span>NickName :</span></th><td><p>"+ res.Nickname + "</p></td></tr><tr><th><span>Anno di nascita :</span></th><td><p>" + res.Year + "</p></td></tr><tr><th><span>Provincia :</span></th><td><p>" + res.Province + "</p></td></tr><tr><th><span>Interessi in comune :</span></th></tr><td><p>"+ res.CommonInterests +"</p></td></table><div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>" );
         });
     }
-//$('#results_research').html(template_home);
 };
 
 /*******************************************BIGLIETTO DA VISITA*********************************************************/
@@ -116,17 +114,16 @@ function openProfile(index){
     var template_result_profile;
 
     $.get('/api/getmissinginformations/' + results[index].Email, (result) =>{
-
         result = JSON.parse(result);
-
-        if(result.message ==''){
-            result = result.object;
+        if(result.code == 200){
+            result = result.obj;
             template_result_profile = "<h1>Profilo di " + results[index].Nickname + "</h1><table><tr><th><span>Nome: </span></th><td><p>"+result.Name+"</p></td></tr><tr><th><span>Cognome: </span></th><td><p>"+result.Surname+"</p></td></tr><tr><th><span>Nickname: </span></th><td><p>" + results[index].Nickname+"</p></td></tr><tr><th><span>Anno di nascita: </span></th><td><p>"+ results[index].Year+"</p></td></tr><tr><th><span>Provincia: </span></th><td><p>"+results[index].Province+"</p></td></tr></table><h1>Interessi</h1><table>";
             
             (result.Interests).forEach((inter)=>{
                 template_result_profile += " <tr><th>Nome interesse: </th><td>" + inter.Name+"</td></tr><tr><th>Descrizione: </th><td>" + inter.Description+"</td></tr>"
             });
             template_result_profile += '</table>'; 
+            
         } else template_result_profile = "<h1>"+ result.message + "</h1>";
         $('#profile_window_content').html(template_result_profile);
         $('#profile_window').show();
@@ -139,21 +136,20 @@ function openProfile(index){
 * Invia un messaggio al risultato selezionato e visualizza eventuali errori.
 */
 $('#send_btn').click(function(){
-    alert('sono in send');
 
-    if($('#text').val() =='') $('#send_message_error').text('Inserisci un messaggio!');
+    if($('#text').val() =='' || $('#psw').val()) $('#send_message_error').text('Inserisci la tua password e un messaggio!');
     else if($('#text').val().length >= 500) $('#send_message_error').text('Ops! Il tuo messaggio è troppo lungo! \n Inserisci un messaggio più corto!');
     else {    
         var e = {
             sender :'',
             password : $('#psw').val(),
-            to : 'test',//results[index_recipient].Email,
+            to : 'test',//results[index_recipient].Email, --> Il commento è stato aggiunto per permettere i test
             subj : $('#obj').val(),
             text : $('#text').val()
         }
         $.post('/api/sendemail', e, (result)=>{
             result = JSON.parse(result);
-            if(result.code == 0 ) $('#send_message_error').text(result.message);
+            if(result.code != 200 ) $('#send_message_error').text(result.message);
             else{ 
                 alert(result.message);
                 $("#send_message_window input[type= 'text']").val('');

@@ -2,10 +2,11 @@ var nodemailer = require('nodemailer');
 var fs = require('fs');
 
 var test = true;
-var recipients = "leonardodigiacinto@live.it, pignlu@libero.it, silvana.rainati@hotmail.it, veronickmsn94@msn.com, pignotti.veronica@outlook.com, veronicapignotti94@gmail.com,*/
 
 /**
-* Invia una mail con i parametri specificati. Ritorna true se l'invio è andato a buon fine, false altrimenti.
+* Invia una mail con i parametri specificati.
+* @param {object} object : l'oggetto contenente tutte le informazioni necessarie per l'invio delle email.
+* @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.sendEmail = (object, response)=>{
     if(test) this.sendEmailTest(object, response);
@@ -13,7 +14,7 @@ module.exports.sendEmail = (object, response)=>{
         fs.readFile('session.json', (err, data)=>{
             if(err){
                 console.log(err);
-                response.end(JSON.stringify({message: 'Si è verificato un errore!'}))
+                response.end(JSON.stringify({code :500, message: 'Si è verificato un errore!'}))
             }
             data = JSON.parse(data);
             // STEP 1: Estraggo l'indirizzo email dell'utente dal file.
@@ -59,55 +60,41 @@ module.exports.sendEmail = (object, response)=>{
                     },
                     auth: {user: sender, pass: object.password}
                     }); 
-            } else if(serv == 'gmail'){
-                transporter =  nodemailer.createTransport({
-                    //host: "smtp.gmail.com", // hostname
-                    //secure : true,
-                    service:'gmail',
-                    // secureConnection: 'false', // TLS requires secureConnection to be false
-                    // port: 465, //587, //465, // port for secure SMTP
-                    //  tls: {
-                    // //    ciphers:'SSLv3',
-                    //      rejectUnauthorized: false
-                    // },
-                    auth: {user: sender.Email, pass: sender.Password}
-                });
-            } 
+            }
     
             // STEP 4: Verifico la connessione
             transporter.verify((err) => { 
                 if (err){
                     console.log(err);
-                    response.end(JSON.stringify({code:0, message:'Si è verificato un errore con la connessione'}));
+                    response.end(JSON.stringify({code:500, message:'Si è verificato un errore con la connessione'}));
                 }
 
                 //STEP 5 : se non ci sono errori, invio l'email.
                 transporter.sendMail(mail, (error) => {
                     console.log(error? error: 'messaggio inviato!');
-                    response.end(JSON.stringify(err?{code:0, message: "Si è verificato un errore durante l'invio del messaggio"}:{code:1, message: "Il tuo messaggio è stato inviato!"}));            
+                    response.end(JSON.stringify(err?{code:500, message: "Si è verificato un errore durante l'invio del messaggio"}:{code:200, message: "Il tuo messaggio è stato inviato!"}));            
                 });
             })
         })
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, veronickmsn94@msn.com, pignotti.veronica@outlook.com, veronicapignotti94@gmail.com";
+
 module.exports.sendEmailTest = (object, response)=>{
 
-    console.log("sono in send emal test")
-
-    var index = 2; // Da 0 a 3
+    var index = 0; // Da 0 a 3
     fs.readFile('FileTestEmail.json', (err, sender)=>{
         if(err){
             console.log(err);
-            response.end(JSON.stringify({message: 'Si è verificato un errore!'}))
+            response.end(JSON.stringify({code : 500, message: 'Si è verificato un errore!'}))
         }
         // STEP 1: Estraggo l'indirizzo email dell'utente dal file.
         sender = JSON.parse(sender)[index];
         
         // STEP 2 : Preparo i dati per l'email
         var mail = {
-            from: '"mittente" <' + sender.Email + '>',
+            from: '"mittente di test" <' + sender.Email + '>',
             to: recipients,
             subject: object.subj,
             text: object.text,
@@ -145,26 +132,13 @@ module.exports.sendEmailTest = (object, response)=>{
                     },
                     auth: {user: sender.Email, pass: sender.Password}
                 }); 
-        }else if(serv == 'gmail'){
-            transporter =  nodemailer.createTransport({
-                //host: "smtp.gmail.com", // hostname
-                //secure : true,
-                service:'gmail',
-                // secureConnection: 'false', // TLS requires secureConnection to be false
-                // port: 465, //587, //465, // port for secure SMTP
-                //  tls: {
-                // //    ciphers:'SSLv3',
-                //      rejectUnauthorized: false
-                // },
-                auth: {user: sender.Email, pass: sender.Password}
-            });
         } 
 
         // STEP 4: Verifico la connessione
         transporter.verify((err) => { 
             if (err){
                 console.log("Si è verificato un errore durante la verifica di connessione tramite l'indirizzo: %s : %s", sender.Email, err);
-                response.end(JSON.stringify({code:0, message:'Si è verificato un errore con la connessione'}));
+                response.end(JSON.stringify({code:500, message:'Si è verificato un errore con la connessione'}));
             }else{
                 console.log("Connessione stabilita!");
                 console.log("mail from = " + mail.from);
@@ -172,7 +146,7 @@ module.exports.sendEmailTest = (object, response)=>{
                 //STEP 5 : se non ci sono errori, invio l'email.            
                 transporter.sendMail(mail, (error) => {
                     console.log(error? "Si è verificato un errore durante l'invio delle email tramite l'indirizzo: " + sender.Email + ":" +  error: 'Messaggio inviato da: ' + sender.Email +  "!");
-                    response.end(JSON.stringify(err?{code:0, message: "Si è verificato un errore durante l'invio del messaggio"}:{code:1, message: "Il tuo messaggio è stato inviato!"}));            
+                    response.end(JSON.stringify(err?{code:500, message: "Si è verificato un errore durante l'invio del messaggio"}:{code:200, message: "Il tuo messaggio è stato inviato!"}));            
                 })
             }
         }) // chiude verify

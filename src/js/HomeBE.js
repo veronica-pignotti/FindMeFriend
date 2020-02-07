@@ -24,7 +24,7 @@ module.exports.search = (province, word, ageMin, ageMax, response) => {
         data = JSON.parse(data);
         if (err) {
             console.log("C'è stato un errore con la lettura del file : " + err);
-            response.end(JSON.stringify({ code: 0, res: [] }))
+            response.end(JSON.stringify({ code: 417, res: "C'è stato un errore con la lettura del file"}));
         } else if(word){
             word = security.checkString(word);
             word = " AND ( Interest.Name = '" + word + "' OR Key1 = '" + word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
@@ -47,9 +47,9 @@ module.exports.search = (province, word, ageMin, ageMax, response) => {
 
             if (err) {
                 console.log(err);
-                response.end(JSON.stringify({ code: 0, res: [] }))
+                response.end(JSON.stringify({ code: 500, res: [] }))
             } else {
-                if (result.length == 0) response.end(JSON.stringify({ code: 1, res: [] }));
+                if (result.length == 0) response.end(JSON.stringify({ code: 204, res: [] }));
                 else extractCommonInterests(flag, result, data.Interests, response);
             }
         });
@@ -114,9 +114,7 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
                 var name;
                 user_interests.forEach(inter => {
                     name = inter.Name;
-                    if (name == row.Name | name == row.Key1 | name == row.Key2 | name == row.Key3 | name == row.Key4) {
-                        table[table.length - 1].CommonInterests.push(security.decodeString(name) + currentEmail);
-                    }
+                    if (name == row.Name | name == row.Key1 | name == row.Key2 | name == row.Key3 | name == row.Key4) table[table.length - 1].CommonInterests.push(security.decodeString(name));
                 });
                 table.forEach(r => { r.Compatibility = Math.round(r.CommonInterests.length * 100 / user_interests.length) });
             } 
@@ -125,7 +123,7 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
         table.sort((a, b) => {
             return a.Compatibility > b.Compatibility ? -1 : (a.Compatibility < b.Compatibility ? 1 : 0);
         });
-        response.end(JSON.stringify({ code: 1, res: table }));
+        response.end(JSON.stringify({ code: 200, res: table }));
     }
 }
 
@@ -138,19 +136,17 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
  * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
  */
 module.exports.getMissingInformations = (email, response) => {
-    var obj;
-    var mess;
+    var object;
     connection.query("SELECT User.Name AS UserName, Surname, Interest.Name AS InterName, Description FROM User JOIN Interest ON Email = User WHERE Email = '" + email + "'", (err, res) => {
 
         if (err) {
             console.log('Si è verificato un errore: ' + err);
-            mess = 'Si è verificato un errore';
-            obj = null;
+            object = {code:500, message :'Si è verificato un errore', obj:null };
         } else {
             mess = '';
-            obj = { Name: res[0].UserName, Surname: res[0].Surname, Interests: [] };
-            res.forEach(row => { obj.Interests.push({ Name: security.decodeString(row.InterName), Description: security.decodeString(row.Description) }) });
+            object = {code:200, message:'', obj : { Name: res[0].UserName, Surname: res[0].Surname, Interests: [] }};
+            res.forEach(row => { (object.obj).Interests.push({ Name: security.decodeString(row.InterName), Description: security.decodeString(row.Description) }) });
         }
-        response.end(JSON.stringify({ message: mess, object: obj }));
+        response.end(JSON.stringify(object));
     })
 }

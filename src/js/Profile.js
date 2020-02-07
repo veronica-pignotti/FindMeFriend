@@ -38,10 +38,12 @@ function showInformations(){
 function showInterests() {
     template_interests = "<h1>Interessi</h1><table>"
     session.Interests.forEach((inter, index)=>{
-        template_interests += " <tr><th>Nome interesse: </th><td ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr><tr><th>Key 1 : </th><td ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>";
+        template_interests += " <tr><th>Nome interesse: </th><td ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr>";
+        template_interests += "<tr><th>Key 1 : </th><td ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>";
         template_interests += "<tr><th>Key 2: </th><td ondblclick= "+'"' + "set('inter_Key2-"+index+"') "+'"' + ">" + (inter.Key2 == null? "" : inter.Key2) +"</td></tr>"
         template_interests += "<tr><th>Key 3 : </th><td ondblclick= "+'"' + "set('inter_Key3-"+index+"') "+'"' + ">" + (inter.Key3 == null? "" : inter.Key3) +"</td><td><input type='button' class='delete_interest_btn' value='Elimina interesse' onclick= "+'"' + "deleteInterest("+index+") "+'"' + "></td></tr>";
-        template_interests += "<tr><th>Key 4 : </th><td ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr><tr><th>Descrizione: </th><td ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</td></tr>";
+        template_interests += "<tr><th>Key 4 : </th><td ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr>";
+        template_interests += "<tr><th>Descrizione: </th><td ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</td></tr>";
     }); 
     template_interests += '</table>';
     $.get('/api/getrules', (rules)=>{
