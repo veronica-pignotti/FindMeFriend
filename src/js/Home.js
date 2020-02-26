@@ -13,7 +13,7 @@ var index_recipient;
 /**
  * Stringa da visualizzare in mancaza di risultati inerenti alla ricerca effettuata.
  */
-var no_results_string = '<p>Attualmente non ci sono persone che corrispondono ai tuoi dati di ricerca.</p>';
+var no_results_string = 'OPS! Attualmente non ci sono persone che corrispondono ai tuoi dati di ricerca.';
 
 $(document).ready(function(){
     prepareHome(true);
@@ -69,7 +69,8 @@ function search(isASearch){
     else{
         $.get('/api/search/' + pr + "/" + k +"/" + min + "/" + max, response =>{
             response = JSON.parse(response);
-            if(response.code != 200) $('#results_research').html(template_home);
+            if(response.code == 400) $.get('/', ()=>{ location.replace('../Welcome.html');});
+            else if(response.code > 204) $('#results_research').html(template_home);
             else{
                 results = response.res;
                 visualizeResults();

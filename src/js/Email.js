@@ -4,12 +4,12 @@ var fs = require('fs');
 var test = true;
 
 /**
-* Invia una mail con i parametri specificati.
+* Invia una mail con i parametri specificati nell'oggetto @param object.
 * @param {object} object : l'oggetto contenente tutte le informazioni necessarie per l'invio delle email.
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.sendEmail = (object, response)=>{
-    if(test) this.sendEmailTest(object, response);
+    if(test) this.sendEmailTest(object, response); // riga inserita per permettere i test
     else{
         fs.readFile('session.json', (err, data)=>{
             if(err){
@@ -24,7 +24,7 @@ module.exports.sendEmail = (object, response)=>{
             // STEP 2 : Preparo i dati per l'email
             var mail = {
                 from: object.sender ==''? sender:object.sender,
-                to: object.to == ''? 'veronica.pignotti@studenti.unicam.it': object.to,
+                to: object.to == ''? 'veronica.pignotti@studenti.unicam.it': object.to, // "to" vuoto solo se l'email è stata inviata senza fare il login
                 subject: object.subj,
                 text: object.text,
             };
@@ -79,11 +79,11 @@ module.exports.sendEmail = (object, response)=>{
     }
 }
 
-var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, veronickmsn94@msn.com, pignotti.veronica@outlook.com, veronicapignotti94@gmail.com";
+var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, pignotti.veronica@outlook.com, veronickmsn94@msn.com,  veronicapignotti94@gmail.com";
 
 module.exports.sendEmailTest = (object, response)=>{
 
-    var index = 0; // Da 0 a 3
+    var index = 1; // Da 0 a 3 poichè il 5° elemento corrisponde all'email gmail
     fs.readFile('FileTestEmail.json', (err, sender)=>{
         if(err){
             console.log(err);

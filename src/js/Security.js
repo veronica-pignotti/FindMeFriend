@@ -4,12 +4,14 @@
  * @param {string} str: la stringa da controllare e convertire. 
  */
 module.exports.checkString = (str) =>{
-    return str.indexOf("<") != -1 || str.indexOf(">") != -1 || str.indexOf('"') != -1? null : encodeString(str);
+
+    if(str.indexOf("<") != -1 || str.indexOf(">") != -1 || str.indexOf('"') != -1) throw new Error();
+    else return (str=="null"? "" : encodeString(str));
 }
 
 /**
  * Sostituisce tutti gli apostrofi con la stringa [39].
- * @param {string} str la stringa da converitire.
+ * @param {string} str la stringa da convertire.
  */
 function encodeString(str){
     return str.indexOf("'") != -1 ? (str.split("'")).join("[39]") : str;
@@ -33,26 +35,44 @@ module.exports.encodePassword = (password)=>{
 }
 
 module.exports.checkUser = (user) =>{
-    user.email = this.checkString(user.email)
-    user.name = this.checkString(user.name);
-    user.surname = this.checkString(user.surname);
-    user.nickname = this.checkString(user.nickname);
-    return (!user.email || !user.name || !user.surname || !user.nickname) ? null : user;
+    try{
+        user.email = this.checkString(user.email)
+        user.name = this.checkString(user.name);
+        user.surname = this.checkString(user.surname);
+        user.nickname = this.checkString(user.nickname);
+        return user;
+    }catch(error){
+        return null;
+    }
+    
 }
 
 module.exports.checkInterest = (interest) =>{
-    interest = {
-        name:this.checkString(interest.name),
-        keys:[this.checkString(interest.keys[0]), this.checkString(interest.keys[1]), this.checkString(interest.keys[2]), this.checkString(interest.keys[3])],
-        description: this.checkString(interest.description)
+    try{
+        interest = {
+                name : this.checkString(interest.name),
+                key1 : this.checkString(interest.key1), 
+                key2 : interest.key2 == "null"? "" : this.checkString(interest.key2), 
+                key3 : interest.key3 == "null"? "" : this.checkString(interest.key3), 
+                key4 : interest.key4 == "null"? "" : this.checkString(interest.key4),        
+                description: this.checkString(interest.description)
+            }
+            return interest;
+    }catch (error){
+        return null;
     } 
-    return (!interest.name || !interest.keys[0] || !interest.keys[1] || !interest.keys[2] || !interest.keys[3] || !description ) ? null : interest;
+    //return (!interest.name || !interest.key1 || !interest.key2 || !interest.key3 || !interest.key4 || !interest.description ) ? null : interest;
 }
 
 module.exports.decodeInterest = (interest) =>{
-    return {
-        name:decodeString(interest.name),
-        keys:[decodeString(interest.keys[0]), decodeString(interest.keys[1]), decodeString(interest.keys[2]), decodeString(interest.keys[3])],
-        description: decodeString(interest.description)
+    return{
+        name: this.decodeString(interest.Name),
+        keys: [
+            this.decodeString(interest.Key1),
+            interest.Key2? this.decodeString(interest.Key2):"",
+            interest.Key3? this.decodeString(interest.Key3):"",
+            interest.Key4? this.decodeString(interest.Key4):""
+        ],
+        description: this.decodeString(interest.Description)
     } 
 }

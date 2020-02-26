@@ -1,4 +1,4 @@
-/********************************************GENERAL VARIABLES************************************************/
+/********************************************GENERAL VARIABLES*****************************************************/
 
 var express = require('express');
 var fs = require('fs');
@@ -20,10 +20,28 @@ const rules = {
 module.exports.rules = rules;
 /*************************************************GENERAL API REST********************************************/
 app.use(express.static('src'));
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
 
+/**
+ * All'avvio dell'applicazione, si controlla se ci sono delle informazioni nel file di cache "session.json". 
+ * Se si verificano errori, l'utente deve effettuare l'autenticazione, altrimenti può utilizzare l'applicazione, 
+ * poiché già autenticato.
+ */
 app.get(['/'], (req, res) => {
-  fs.writeFile('session.json', "In questo file verranno memorizzati, in formato JSON, i dati della tua sessione.", () =>{res.redirect("Welcome.html");});
-});
+  fs.readFile('session.json', (error, data)=>{
+    try{
+      if(error) throw new Error();
+      else{
+        data = JSON.parse(data);
+        res.redirect("FindMeFriend.html");
+      }
+    }catch(err){
+      fs.writeFile('session.json', "In questo file verranno memorizzati, in formato JSON, i dati della tua sessione.", () =>{res.redirect("Welcome.html");});
+    }
+  })
+});  
+  
 
 /*****************************************************SESSION*************************************************/
 
@@ -35,8 +53,8 @@ app.get(['/api/getsession'], (req,res)=>{
 /***************************************WELCOME***************************************************************/
 var wbe = require('./src/js/WelcomeBE');
 
-app.post(['/api/insertuser/:email/:password/:name/:surname/:nickname/:year/:province'], (req,res)=>{
-  wbe.insertUser(req.params.email, req.params.password, req.params.name, req.params.surname, req.params.nickname, req.params.year, req.params.province, res);
+app.post(['/api/insertuser'], (req,res)=>{
+  wbe.insertUser(req.body, res);
 });
 
 app.get(['/api/authentication/:email/:password'], (req, res)=>{
@@ -64,9 +82,8 @@ app.get(['/api/getmissinginformations/:email'], (req, res) =>{
 /****************************************PROFILE**************************************************************/
 var pbe = require('./src/js/ProfileBE');
 
-app.post(['/api/addinterest/:email/:name/:key1/:key2/:key3/:key4/:description'], (req, res)=>{
-  var arr_keys =  [req.params.key1, req.params.key2, req.params.key3, req.params.key4];
-  pbe.addInterestUpdate(req.params.email, req.params.name, arr_keys, req.params.description, res);
+app.post(['/api/addinterest/:email'], (req, res)=>{
+  pbe.addInterestUpdate(req.params.email, req.body, res);
 })
 
 app.delete(['/api/delete/interest/:name/:email'], (req, res) =>{
@@ -90,8 +107,6 @@ app.put(['/api/setpassword/:old/:new/:email'], (req, res) =>{
 })
 
 /****************************************EMAIL***************************************************************/
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post(['/api/sendemail'], (req, res) =>{ 
   require('./src/js/Email').sendEmail(req.body, res);

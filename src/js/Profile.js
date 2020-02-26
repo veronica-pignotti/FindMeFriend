@@ -84,7 +84,7 @@ $('#set_window_ok_button').click(function(){
             success : result =>{
                 result = JSON.parse(result);
                 alert(result.message);
-                if(result.code == 1) updateSession(prefix =='info' ? 0:1);
+                if(result.code == 201) updateSession(prefix =='info' ? 0:1);
             }
         })
     }
@@ -104,31 +104,40 @@ $('#btn_add_interest').click(function(){$('#add_interest_window').show()});
 * Al click sul bottone aggiungi, si effettuano i controlli necessari per l'aggiunta di tale interesse.
 */
 $('#add_interest_add_button').click(function(){
+
+    var k = [$('#new_key1').val() , $('#new_key2').val() , $('#new_key3').val() , $('#new_key4').val()];
     var interest ={
         name : $('#new_name').val(),
-        keys : [$('#new_key1').val() , $('#new_key2').val() , $('#new_key3').val() , $('#new_key4').val()],
+        key1 : "",
+        key2 : "",
+        key3 :"",
+        key4: "",
         description : $('#new_description').val()
     }
 
     if(
         interest.name == '' | interest.description == '' | 
-        (interest.keys[0]=='' & interest.keys[1]=='' & interest.keys[2]=='' & interest.keys[3]=='')
+        (k[0]=='' & k[1]=='' & k[2]=='' & k[3]=='')
     ) $('#add_interest_message').text('Inserisci il nome che identifica il tuo interesse, la sua descrizione e almeno una parola chiave.');
     else{
         
         for(i = 0; i < 4; i++){ 
-            if(interest.keys[i] == '') {// sposta gli elementi vuoti alla fine e li rimpiazza con la stringa null
-                interest.keys.splice(i,1);
-                interest.keys.push('null');
+            if(k[i] == '') {// sposta gli elementi vuoti alla fine e li rimpiazza con la stringa null
+                k.splice(i,1);
+                k.push('null');
                 i--; 
             }
         }
-         
+        
+        interest.key1 = k[0];
+        interest.key2 = k[1];
+        interest.key3 = k[2];
+        interest.key4 = k[3];
+                
         $.post('/api/addinterest/' + session.Email , interest, (res) =>{
             res = JSON.parse(res);
             $('#add_interest_message').text(res.message);
-            if(res.length == 10) $('#add_interest_button').hide();
-            if (res.length != 0){ 
+            if (res.code == 201){ 
                 $('#add_interest_window').hide();
                 $("#add_interest_window input[type = 'text']").val('');
                 updateSession(1);
@@ -160,7 +169,7 @@ $('#delete_interest_yes_button').click(function(){
         success : result =>{
             result = JSON.parse(result);
             alert(result.message);
-            if(result.code == 1) updateSession(1);
+            if(result.code == 201) updateSession(1);
             last_item='';   
         }
     })
@@ -187,10 +196,8 @@ $('#delete_profile_yes_btn').click(function(){
         success : result =>{
             result = JSON.parse(result);
             alert(result.message);
-            if(result.code == 1) $.get('/', ()=>{ 
-                location.replace('../Welcome.html');
-                alert('dovrebbe essersi aperta la pagina welcome');
-            
+            if(result.code == 201) $.get('/', ()=>{ 
+                location.replace('../Welcome.html');            
             });
         }
     })
@@ -251,4 +258,8 @@ function updateSession(section){
 */
 $('.cancel_btn').click(function () {
     $(this).parent().parent().hide();
+})
+
+$('#annullabtn').click(function(){
+    $('#set_window').hide();
 })

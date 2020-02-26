@@ -21,7 +21,9 @@ module.exports.search = (province, word, ageMin, ageMax, response) => {
     var years = check([ageMin, ageMax]);
 
     fs.readFile('session.json', (err, data) => {
-        data = JSON.parse(data);
+        try{data = JSON.parse(data);}catch(error){ response.end(JSON.stringify({ code: 400, res: ""}));
+    }
+        
         if (err) {
             console.log("C'è stato un errore con la lettura del file : " + err);
             response.end(JSON.stringify({ code: 417, res: "C'è stato un errore con la lettura del file"}));

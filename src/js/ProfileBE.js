@@ -1,5 +1,8 @@
 var connection = require('./Database').connection;
 var security = require('./Security');
+
+/*******************************************MODIFICA ELEMENTO*************************************************************/
+
 /**
 * Apporta le modifiche alle informazioni dell'utente seguendo i parametri inseriti.
 * @param {string} column la colonna corrispondente al valore da modificare; può essere Nickname o Province.
@@ -49,32 +52,25 @@ module.exports.setInterestUpdate = (column, value, name, email, response)=>{
     }
 }
 
+/*******************************************AGGIUNTA INTERESSE************************************************************/
+
 /**
  * Aggiunge alla tabella degli interessi, l'interesse con le informazioni specificate e ritorna un file JSON contente un codice e un messaggio.
  * Gli apostrofi vengono sostituiti con [39].
  * @param {string} email l'email dell'utente.
- * @param {string} name il nome dell'interesse.
- * @param {string[]}keys la lista di parole chiave.
- * @param {string} description la descrizione dell'interesse.
+ * @param {string} interest l'interesse da aggiungere.
  * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
  * */
 module.exports.addInterestUpdate = (email, interest, response) =>{
+
     interest = security.checkInterest(interest);
-    if(!interest) response.end({code:205, message: 'Non puoi inserire i simboli <, >, "'});
-    var list_keys='';
-    var values= '';
-    var k = 0;
-    interest.keys.forEach((key)=>{
-        if(key !=null){
-            k+=1;
-            list_keys += 'Key'+(k) + ', ';
-            values+= " '" + interest.keys[i] + "', ";
-        }
-    })
-    var sql = "INSERT INTO Interest (User, Name, " + list_keys + " Description) VALUES ( '" + email + "', '" + interest.name + "', " + values + "'"+ interest.description + "')";
+
+    if(!interest) response.end(JSON.stringify({code:205, message: 'Non puoi inserire i simboli <, >, "'}));
+
+    var sql = "INSERT INTO Interest (User, Name, Key1, Key2, Key3, Key4, Description) VALUES ( '" + email + "', '" + interest.name + "', '" + interest.key1 + "', '"+ interest.key2 + "', '" + interest.key3 + "', '" + interest.key4 + "', '"+ interest.description + "')";
     connection.query(sql, (err) => {
         var obj = err? 
-                ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + value)!= -1? 
+                ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + interest.name)!= -1? 
                     {code: 205, message: "Il nome inserito appartiene già ad un tuo interesse."}: 
                     {code : 500, message : "Si è verificato un errore durante la connessione con il database."} 
                 ): {code: 201, message: "La tua modifica è andata a buon fine!"};
@@ -84,6 +80,8 @@ module.exports.addInterestUpdate = (email, interest, response) =>{
     })
 }
 
+/*******************************************ELIMINA INTERESSE*************************************************************/
+
 /**
  * Elimima l'interesse specificato dal database.
  * @param {string} email: l'email dell'utente.
@@ -91,7 +89,7 @@ module.exports.addInterestUpdate = (email, interest, response) =>{
  * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
  */
 module.exports.deleteInterestUpdate = (email, name, response)=>{
-    connection.query("DELETE FROM Interest WHERE User ='" + email + "' AND Name = '" + securiry.checkString(name) + "'", (err) => {
+    connection.query("DELETE FROM Interest WHERE User ='" + email + "' AND Name = '" + security.checkString(name) + "'", (err) => {
         var obj;
         if (err){
             console.log(err);
@@ -104,6 +102,8 @@ module.exports.deleteInterestUpdate = (email, name, response)=>{
     });
 };
 
+/*******************************************ELIMINA PROFILO***************************************************************/
+
 /**
  * Elimina ogni traccia dell'utente dal database.
  * @param {string} email: l'email dell'utente.
@@ -112,13 +112,13 @@ module.exports.deleteInterestUpdate = (email, name, response)=>{
 
 module.exports.deleteProfileUpdate = (email, response)=>{
     // DELETE FROM Interest WHERE User = '" + email + "'";
-    connection.query("DELETE FROM User WHERE Email = '" + email + "' ", (err) => {
+    connection.query("DELETE FROM Interest WHERE User = '" + email + "' ", (err) => {
         var obj;
         if (err){
             console.log(err);
             response.end(JSON.stringify( {code : 500, message : "Si è verificato un errore durante la connessione con il database."}));
         } else{
-            connection.query("DELETE FROM Interest WHERE User = '" + email + "'", (err) => {
+            connection.query("DELETE FROM User WHERE Email = '" + email + "'", (err) => {
                 var obj;
                 if (err) console.log(err);
                 obj = err?
@@ -129,6 +129,8 @@ module.exports.deleteProfileUpdate = (email, response)=>{
         }
     })
 }
+
+/*******************************************CAMBIA PASSWORD***************************************************************/
 
 module.exports.setPasswordUpdate = (oldpass, newpass, email, response) =>{
 

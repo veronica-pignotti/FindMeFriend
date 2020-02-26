@@ -6,18 +6,19 @@ body{
     padding: 10px;
 }
 
-img{
-    position: inherit;
-    margin: 0px 28.54%;
+#logoimg{
+    width: 40%;
+    height: 30%;
+    margin-left: 30%;
+    
+    
 }
 
-.principal_btn{
-    width: 200px;
-    height: 100px;
-    margin: 0 17.3%;
-}
 
-#btn_profile{float: right;}
+#btn_home , #btn_profile{
+    margin-top: 10px;
+    background-position: center center;
+}
 
 #content {
     margin-top: 10px;
