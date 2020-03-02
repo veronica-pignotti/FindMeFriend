@@ -11,21 +11,18 @@ var security = require('./Security');
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.setInformationUpdate = (column, value, email, response)=>{
-    value = security.checkString(value);
-    if(!value) response.end(JSON.stringify({code:205, message: 'Non puoi inserire i simboli <, >, "'}));
-    else{
-        connection.query("UPDATE User SET " + column + " = '" + value + "' WHERE Email = '" + email + "'", (err) => {
-            var obj = err? 
-                ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + value)!= -1? 
-                    {code: 205, message: "Nickname già utilizzato!"}: 
-                    {code : 500, message : "Si è verificato un errore durante la connessione con il database."} 
-                ): {code: 201, message:"La tua modifica è andata a buon fine!"};
-            if (err) console.log(err);
-            else updateFile('User', email);
-            response.end(JSON.stringify(obj));
-        });
-    }
-   
+    if(!security.checkString(value)) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
+    else {connection.query("UPDATE User SET " + column + " = '" + value + "' WHERE Email = '" + email + "'", (err) => {
+        var obj = err? 
+            ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + value)!= -1? 
+                {code: 205, message: "Nickname già utilizzato!"}: 
+                {code : 500, message : "Si è verificato un errore durante la connessione con il database."} 
+            ): {code: 201, message:"La tua modifica è andata a buon fine!"};
+        if (err) console.log(err);
+        else updateFile('User', email);
+        response.end(JSON.stringify(obj));
+    }); 
+}
 }
 
 /**
@@ -36,19 +33,18 @@ module.exports.setInformationUpdate = (column, value, email, response)=>{
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.setInterestUpdate = (column, value, name, email, response)=>{
-    value = security.checkString(value);
-    if(!value) response.end(JSON.stringify({code:205, message: 'Non puoi inserire i simboli <, >, "'}));
+    if(!security.checkString(value)) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
     else{
-        connection.query("UPDATE Interest SET " + column + " = '" + value + "' WHERE User = '" + email + "' AND Name = '" + name + "'", (err) => {
-            var obj = err? 
-                ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + value)!= -1? 
-                    {code: 205, message: "Il nome inserito appartiene già ad un tuo interesse."}: 
-                    {code : 500, message : "Si è verificato un errore durante la connessione con il database."} 
-                ): {code: 201, message:"La tua modifica è andata a buon fine!"};
-            if (err) console.log(err);
-            else updateFile('Interest', email);
-            response.end(JSON.stringify(obj));
-        });
+    connection.query("UPDATE Interest SET " + column + " = '" + value + "' WHERE User = '" + email + "' AND Name = '" + name + "'", (err) => {
+        var obj = err? 
+            ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + value)!= -1? 
+                {code: 205, message: "Il nome inserito appartiene già ad un tuo interesse."}: 
+                {code : 500, message : "Si è verificato un errore durante la connessione con il database."} 
+            ): {code: 201, message:"La tua modifica è andata a buon fine!"};
+        if (err) console.log(err);
+        else updateFile('Interest', email);
+        response.end(JSON.stringify(obj));
+    });
     }
 }
 
@@ -62,10 +58,8 @@ module.exports.setInterestUpdate = (column, value, name, email, response)=>{
  * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
  * */
 module.exports.addInterestUpdate = (email, interest, response) =>{
-
     interest = security.checkInterest(interest);
-
-    if(!interest) response.end(JSON.stringify({code:205, message: 'Non puoi inserire i simboli <, >, "'}));
+    if(!interest) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
 
     var sql = "INSERT INTO Interest (User, Name, Key1, Key2, Key3, Key4, Description) VALUES ( '" + email + "', '" + interest.name + "', '" + interest.key1 + "', '"+ interest.key2 + "', '" + interest.key3 + "', '" + interest.key4 + "', '"+ interest.description + "')";
     connection.query(sql, (err) => {
@@ -133,7 +127,8 @@ module.exports.deleteProfileUpdate = (email, response)=>{
 /*******************************************CAMBIA PASSWORD***************************************************************/
 
 module.exports.setPasswordUpdate = (oldpass, newpass, email, response) =>{
-
+    if(!security.checkString(oldpass)) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
+    if (!security.checkString(newpass)) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
     oldpass = security.encodePassword(oldpass);
     connection.query("SELECT Password FROM User WHERE Email = '" + email + "'", (err, resQuery)=>{
         if(err){

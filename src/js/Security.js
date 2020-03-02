@@ -4,9 +4,9 @@
  * @param {string} str: la stringa da controllare e convertire. 
  */
 module.exports.checkString = (str) =>{
-
-    if(str.indexOf("<") != -1 || str.indexOf(">") != -1 || str.indexOf('"') != -1) throw new Error();
-    else return (str=="null"? "" : encodeString(str));
+    return str.indexOf("<") != -1 || str.indexOf(">") != -1 || str.indexOf('"') != -1?
+        null:
+        (str=="null"? "" : encodeString(str));
 }
 
 /**
@@ -35,20 +35,16 @@ module.exports.encodePassword = (password)=>{
 }
 
 module.exports.checkUser = (user) =>{
-    try{
-        user.email = this.checkString(user.email)
-        user.name = this.checkString(user.name);
-        user.surname = this.checkString(user.surname);
-        user.nickname = this.checkString(user.nickname);
-        return user;
-    }catch(error){
-        return null;
-    }
-    
+    user.email = this.checkString(user.email)
+    user.name = this.checkString(user.name);
+    user.surname = this.checkString(user.surname);
+    user.nickname = this.checkString(user.nickname);
+    return !user.email || !user.name || !user.surname || !user.nickname?
+        null :
+        user;   
 }
 
 module.exports.checkInterest = (interest) =>{
-    try{
         interest = {
                 name : this.checkString(interest.name),
                 key1 : this.checkString(interest.key1), 
@@ -57,11 +53,7 @@ module.exports.checkInterest = (interest) =>{
                 key4 : interest.key4 == "null"? "" : this.checkString(interest.key4),        
                 description: this.checkString(interest.description)
             }
-            return interest;
-    }catch (error){
-        return null;
-    } 
-    //return (!interest.name || !interest.key1 || !interest.key2 || !interest.key3 || !interest.key4 || !interest.description ) ? null : interest;
+    return (!interest.name || !interest.key1 || !interest.key2 || !interest.key3 || !interest.key4 || !interest.description ) ? null : interest;
 }
 
 module.exports.decodeInterest = (interest) =>{
@@ -75,4 +67,12 @@ module.exports.decodeInterest = (interest) =>{
         ],
         description: this.decodeString(interest.Description)
     } 
+}
+
+module.exports.checkEmail = (email) => {
+    return  !this.checkString(email.sender) ||
+            !this.checkString(email.to) ||
+            !this.checkString(email.text) ?
+            null: 
+            email;
 }

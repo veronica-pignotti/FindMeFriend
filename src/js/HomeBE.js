@@ -17,18 +17,19 @@ var security = require('./Security');
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.search = (province, word, ageMin, ageMax, response) => {
+
     var flag = true;
     var years = check([ageMin, ageMax]);
 
     fs.readFile('session.json', (err, data) => {
-        try{data = JSON.parse(data);}catch(error){ response.end(JSON.stringify({ code: 400, res: ""}));
-    }
+        data = JSON.parse(data);
         
         if (err) {
             console.log("C'è stato un errore con la lettura del file : " + err);
             response.end(JSON.stringify({ code: 417, res: "C'è stato un errore con la lettura del file"}));
         } else if(word){
             word = security.checkString(word);
+            if(!word) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
             word = " AND ( Interest.Name = '" + word + "' OR Key1 = '" + word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
         }else {
             flag = false;

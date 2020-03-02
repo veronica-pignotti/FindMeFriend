@@ -1,17 +1,62 @@
 body{
     background: url('../../images/orangeyellow.jpg') no-repeat center fixed;
     background-size: cover;
+    height: fit-content;
 }        
 
+/**********************************************INFORMAZIONI***************************************************/
+#informations {
+    border: 1px solid black;
+    margin-top: 10px;
+    background-color: white;
+}
+
+#titoloinf{
+    margin-left: 20%;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#tabellainformazioni p{
+    margin-top: 16px;
+}
+
+#tabellainformazioni{
+    margin-left: 20px;
+}
+/**********************************************INTERESSI******************************************************/
+
+#interests{
+    border: 1px solid black;
+    margin-top: 10px;
+    background-color: white;
+    padding-bottom: 20px;
+}
+
+.tabellainteressi, .descr{
+    margin: 0px 10%;
+}
+
+.tabellainteressi th{
+    width: 20px;
+}
+/**********************************************AGGIUNGI INTERESSE*********************************************/
 #add_interest_window{
     border: 1px solid black;
     width: 70%;
     height: 80%;
-    position:  fixed;
+    position:  absolute;
     margin-left: 20%;
+    
     display: none;
     background-color: white;
+    top: 112px;
 }
+
+/*#new_key1 , #new_key2 , #new_key3 , #new_key4 {*/
+#add_interest_window li{
+    width:60% ;
+ }
 
 #new_description{
     width: 90%;
@@ -24,39 +69,21 @@ body{
     margin-left: 15px;
 }
 
-
-
-
-
-#informations {
-    border: 1px solid black;
-    margin-top: 10px;
-    background-color: white;
+#elementstyle {
+    padding-left: 40px;
+    border-top-width: 10px;
+    padding-top: 10px;
 }
 
-#delete_profile_btn , #set_password_btn {
-    margin-top: 10px;
-    font-size: 12px;
-    
+
+/*#add_interest_add_button , #indietrobtn{*/
+#add_interest_window input[type=button]{
+    font-size: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
 }
 
-#interests{
-    border: 1px solid black;
-    margin-top: 10px;
-    background-color: white;
-}
-
-#btn_add_interest{
-    margin-left: 20%;
-    margin-top: 10px;
-}
-
-#titoloinf{
-    margin-left: 20%;
-    margin-top: 10px;
-    font-size: 20px;
-}
-
+/**********************************************MODIFICA CAMPO*************************************************/
 #set_window{
     border:  1px black solid;
     width: 60%;
@@ -65,8 +92,6 @@ body{
     margin-left: 20%;
     display: none;
     background-color: white;
-
-
 }
 
 #set_window_input{
@@ -76,55 +101,58 @@ body{
     background-color: white;
 }
 
-#set_window_ok_button {   
-    font-size: 100%;
-}
-
- #annullabtn {
-    margin-left: 50%;   
-    font-size: 100%;
-}
-
-
-#tabellaset {
+#set_window table {
     margin-left: 10%;
     width: 20%;
     height: 20%;
 }
 
-#tabellaset th{
+#set_window th{
     padding-left: 5%;
 }
 
+#set_window_ok_button {   
+    font-size: 100%;
+}
 
- #new_key1 , #new_key2 , #new_key3 , #new_key4 {
-
-        width:60% ;
- }
-
- 
-#elementstyle {
-    padding-left: 40px;
-    border-top-width: 10px;
+#annullabtn {
+    margin-left: 50%;   
+    font-size: 100%;
+}
+/**********************************************MODIFICA PASSWORD**********************************************/
+#set_password_window{
     padding-top: 10px;
+    border: 1px solid black;
+    width: 60%;
+    height: fit-content;
+    position: fixed;
+    margin-left: 10%;
+    background-color: white;
+    display: none;
+    top: 112px;
 }
 
-#add_interest_add_button , #indietrobtn{
-   font-size: 80%;
-   margin-left: 10%;
-   margin-top: 10%;
+/**********************************************BOTTONI********************************************************/
 
+#delete_profile_btn , #set_password_btn {
+    margin-top: 10px;
+    font-size: 12px;   
 }
 
+#btn_add_interest{
+    margin-left: 20%;
+    margin-top: 10px;
+}
 
 #delete_interest_window , #delete_profile_window{
     border: 1px solid black;
-    position:  fixed;
+    position:  absolute;
     margin-left: 30%;
-    width: 250px;
+    width: 40%;
     height: fit-content;
     display: none;
     background-color: white;
+    top: 112px;
 }
 
 #delete_interest_yes_button , #nobutton , #cancelbtn , #delete_profile_yes_btn , #indietrocambiopassword , #set_password_ok_btn{
@@ -132,14 +160,9 @@ body{
     margin-top: 10px;
 }
 
-
-#set_password_window{
-    padding-top: 10px;
-    border: 1px solid black;
-    width: 40%;
-    height: 20%;
-    position: fixed;
+#eliminainteresse{
     margin-left: 20%;
-    background-color: white;
-    display: none;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }

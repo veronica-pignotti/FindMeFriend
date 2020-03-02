@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <link href="../css/Profile.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -22,8 +23,14 @@
                 <input type="button" value="Aggiungi Interesse" id="btn_add_interest" class="btn btn-primary">
                 <div id='interests'></div>
             </div>
+
+
         </div>
     </div>
+
+
+
+   
 
 
     <!--SET WINDOW-->
@@ -33,13 +40,16 @@
             <table id="tabellaset">
                 <tr>
                     <th><input type="button" id="set_window_ok_button" value="Conferma" class="btn btn-success"></th>
-                    <th><input type="button" id="annullabtn" class="btn btn-danger" value="Annulla"></th>
+                    <th><input type="button" id="annullabtn" class="cancel_btn btn btn-danger" value="Annulla"></th>
                 </tr>
             </table>
         </p>
     </div>
 
     <!--ADD INTEREST WINDOW-->
+
+
+
     <div id="add_interest_window" class='action_window'>
         <div class="conteiner">
             <div class="row">
@@ -59,15 +69,25 @@
                 </div>
 
                 <div class="col-xs-6 col-sm-6">
+
                     <textarea id="new_description"></textarea>
+
                 </div>
+
+
             </div>
         </div>
+
+
         <p>
             <input type="button" value="Aggiungi interesse" id="add_interest_add_button" class="btn btn-success">
             <input type="button" value="Annulla" class="cancel_btn btn btn-danger" id="indietrobtn">
         </p>
+
+
     </div>
+
+
 
     <!--DELETE INTEREST WINDOW-->
     <div id="delete_interest_window" class='action_window'>
@@ -78,7 +98,9 @@
             <input type="button" value="No" class="cancel_btn btn btn-success" id="nobutton">
         </p>
     </div>
-    </div>
+    
+
+
 
     <!--DELETE PROFILE WINDOW-->
     <div id="delete_profile_window" class='action_window'>
@@ -88,6 +110,8 @@
             <input value="No" type="button" class="cancel_btn btn btn-success" id="cancelbtn">
         </p>
     </div>
+
+
 
     <!--SET PASSWORD-->
     <div id="set_password_window" class='action_window'>
@@ -100,6 +124,11 @@
         </p>
         <p id="set_password_message"></p>
     </div>
+    </div>
+
+
+
     <script src="../js/Profile.js"></script>
 </body>
+
 </html>

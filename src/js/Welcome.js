@@ -8,12 +8,16 @@ $('#loginbtn').click(function(){
     if (!(email && password)) $('#login_error').text('Inserisci email e password.');
     else{
         $.get('/api/authentication/'+ email + '/' + password, (resultAuth) =>{
+
+            console.log("JSON.parse(resultAuth).message = " + JSON.parse(resultAuth).message);
+            
             resultAuth = JSON.parse(resultAuth).message;
+
             if(resultAuth !='') $('#login_error').text(resultAuth); 
             else{
                 $.post('/api/savesession/' + email);
                 location.replace('../FindMeFriend.html');
-            } 
+            }
         });
     } 
 });
@@ -92,3 +96,5 @@ $('#btnsend').click(function(){
         })
     }else $('#send_feedback_message').text("Inserisci la tua email, la tua password dell'account di posta elettronica e il messaggio che vuoi inviare");
 });
+
+$('#buttonback').click(function () { $('#registration_window').hide(); })

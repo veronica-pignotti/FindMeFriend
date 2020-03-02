@@ -12,6 +12,11 @@ var security = require('./Security');
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.authentication = (email, password, response) => {
+
+    email = security.checkString(email);
+
+    if(!email || !password) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
+
     connection.query("SELECT Email, Name, Surname, Nickname, Year, Province FROM User WHERE Email = '" + email + "' AND Password = '" + security.encodePassword(password) + "'", (err, resQuery) => {
         var obj;
         if(err){
@@ -58,8 +63,9 @@ function createSession(obj){
 * - ogni nickname deve essere unico, quindi, nel caso di inserimento di un nickname uguale ad uno già presente, viene lanciato un errore.
 */
 module.exports.insertUser = (user, response)=>{
+    
     user = security.checkUser(user);
-    if(!user) response.end({code:205, message: 'Non puoi inserire i simboli <, >, "'});
+    if(!user) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
 
     var user_age = new Date().getFullYear() - user.year;
     if(user_age < rules.min_age_subscribe | user_age > rules.max_age_subscribe ) response.end(JSON.stringify({message : "Mi dispiace! Devi avere un'età copresa tra i 18 e i 30 per iscriverti!"}));

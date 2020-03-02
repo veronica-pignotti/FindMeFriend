@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 var fs = require('fs');
-
+var security = require("./Security");
 var test = true;
 
 /**
@@ -9,7 +9,8 @@ var test = true;
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.sendEmail = (object, response)=>{
-    if(test) this.sendEmailTest(object, response); // riga inserita per permettere i test
+    if(security.checkEmail(object)) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
+    else if(test) this.sendEmailTest(object, response); // riga inserita per permettere i test
     else{
         fs.readFile('session.json', (err, data)=>{
             if(err){
