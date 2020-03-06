@@ -39,7 +39,7 @@ function showInterests() {
     template_interests = "<h1 class='text-center'>Interessi</h1>"
     session.Interests.forEach((inter, index)=>{
         template_interests += " <table class = 'tabellainteressi'><tr><th>Nome interesse: </th><td ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr><tr><th>Key 1 : </th><td ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>";
-        template_interests += "<tr><th>Key 2: </th><td ondblclick= "+'"' + "set('inter_Key2-"+index+"') "+'"' + ">" + (inter.Key2 == null? "" : inter.Key2) +"</td></tr>"
+        template_interests += "<tr><th>Key 2: </th><td id = 'inter_Key2-"+index+"' ondblclick= "+'"' + "set('inter_Key2-"+index+"') "+'"' + ">" + (inter.Key2 == null? "" : inter.Key2) +"</td></tr>"
         template_interests += "<tr><th>Key 3 : </th><td ondblclick= "+'"' + "set('inter_Key3-"+index+"') "+'"' + ">" + (inter.Key3 == null? "" : inter.Key3) +"</td></tr>";
         template_interests += "<tr><th>Key 4 : </th><td ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr></table>";
         template_interests+= "<p class = 'descr' ><b>Descrizione: </b></p><p class = 'descr' ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</p><input type='button' id= 'eliminainteresse' class='delete_interest_btn btn btn-danger' value='Elimina interesse' onclick= "+'"' + "deleteInterest("+index+") "+'"' + ">";
@@ -59,6 +59,13 @@ function showInterests() {
 function set(item){
     $('#set_window').show();
     last_item = item;
+    var x = 'td [ondblclick="set(' + "'"+ item + "')" +'"]';
+    var y = '[ondblclick="set(' + "'"+ item + "')" +'"]';
+    console.log($("#"+ item).text());
+    console.log($(x).text());
+    console.log($(y).text());
+
+    $('#set_window_input').val($(x).text());
 };
 
 /**
@@ -134,12 +141,20 @@ $('#add_interest_add_button').click(function(){
                 
         $.post('/api/addinterest/' + session.Email , interest, (res) =>{
             res = JSON.parse(res);
-            $('#add_interest_message').text(res.message);
             if (res.code == 201){ 
                 $('#add_interest_window').hide();
+                alert(res.message);
                 $("#add_interest_window input[type = 'text']").val('');
                 updateSession(1);
-            }
+                $('#add_interest_message').text("");
+                $('#new_key1').val(""); 
+                $('#new_key2').val("");
+                $('#new_key3').val("");
+                $('#new_key4').val("");
+                $('#new_name').val("");
+                $('#new_description').val("");
+            }else $('#add_interest_message').text(res.message);
+
         })  
     }
 })
@@ -195,7 +210,7 @@ $('#delete_profile_yes_btn').click(function(){
             result = JSON.parse(result);
             alert(result.message);
             if(result.code == 201) $.get('/', ()=>{ 
-                location.replace('../Welcome.html');            
+                $('#page').load('./Welcome.html');            
             });
         }
     })
@@ -260,4 +275,10 @@ $('.cancel_btn').click(function () {
 
 $('#annullabtn').click(function(){
     $('#set_window').hide();
+})
+
+$('#logout_btn').click(function(){
+    $.get('/api/logout', result =>{
+        $('#page').load('./Welcome.html');
+    })
 })

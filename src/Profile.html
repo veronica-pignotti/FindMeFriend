@@ -17,21 +17,16 @@
                 <div id='informations'></div>
                 <input type="button" value="Cancella profilo" id="delete_profile_btn" class="btn btn-danger">
                 <input type="button" value="Modifica password" id="set_password_btn" class="btn btn-danger">
+                <input type="button" value="Esci" id="logout_btn" class="btn btn-danger">
+                
             </div>
 
             <div class="col-xs-6 col-sm-6">
                 <input type="button" value="Aggiungi Interesse" id="btn_add_interest" class="btn btn-primary">
                 <div id='interests'></div>
             </div>
-
-
         </div>
     </div>
-
-
-
-   
-
 
     <!--SET WINDOW-->
     <div id="set_window" class='action_window'>
@@ -40,22 +35,20 @@
             <table id="tabellaset">
                 <tr>
                     <th><input type="button" id="set_window_ok_button" value="Conferma" class="btn btn-success"></th>
-                    <th><input type="button" id="annullabtn" class="cancel_btn btn btn-danger" value="Annulla"></th>
+                    <th><input type="button" id="annullabtn" class="btn btn-danger" value="Annulla"></th>
                 </tr>
             </table>
         </p>
     </div>
 
     <!--ADD INTEREST WINDOW-->
-
-
-
     <div id="add_interest_window" class='action_window'>
         <div class="conteiner">
             <div class="row">
                 <div class="col-xs-6 col-sm-6" id="elementstyle">
                     <p>Inserisci un interesse <p id="add_interest_message"></p>
                     </p>
+                    <p>Nome</p>
                     <input type="text" id="new_name">
                     <p>1-Inserisci fino a 4 parole chiave:</p>
                     <list>
@@ -69,9 +62,8 @@
                 </div>
 
                 <div class="col-xs-6 col-sm-6">
-
+                    <p>Descrizione</p>
                     <textarea id="new_description"></textarea>
-
                 </div>
 
 

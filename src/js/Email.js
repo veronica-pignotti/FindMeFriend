@@ -80,7 +80,7 @@ module.exports.sendEmail = (object, response)=>{
     }
 }
 
-var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, pignotti.veronica@outlook.com, veronickmsn94@msn.com,  veronicapignotti94@gmail.com";
+var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, pignotti.veronica@outlook.com, veronickmsn94@msn.com, veronicapignotti94@gmail.com";
 
 module.exports.sendEmailTest = (object, response)=>{
 

@@ -17,7 +17,6 @@ var security = require('./Security');
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 module.exports.search = (province, word, ageMin, ageMax, response) => {
-
     var flag = true;
     var years = check([ageMin, ageMax]);
 
@@ -30,7 +29,7 @@ module.exports.search = (province, word, ageMin, ageMax, response) => {
         } else if(word){
             word = security.checkString(word);
             if(!word) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
-            word = " AND ( Interest.Name = '" + word + "' OR Key1 = '" + word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
+            else word = " AND ( Interest.Name = '" + word + "' OR Key1 = '" + word + "' OR Key2 = '" + word + "' OR Key3 = '" + word + "' OR Key4 = '" + word + "')";
         }else {
             flag = false;
             word = '';
@@ -86,6 +85,7 @@ function check(arr) {
 * @param {Response} response l'oggetto di tipo Response che permette di inviare la risposta HTTP.
 */
 function extractCommonInterests(searchByWord, interested_people, user_interests, response) {
+
     var table = [];
     var currentEmail = "";
     if (searchByWord) {
@@ -126,6 +126,7 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
         table.sort((a, b) => {
             return a.Compatibility > b.Compatibility ? -1 : (a.Compatibility < b.Compatibility ? 1 : 0);
         });
+
         response.end(JSON.stringify({ code: 200, res: table }));
     }
 }

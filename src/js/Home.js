@@ -13,7 +13,7 @@ var index_recipient;
 /**
  * Stringa da visualizzare in mancaza di risultati inerenti alla ricerca effettuata.
  */
-var no_results_string = 'OPS! Attualmente non ci sono persone che corrispondono ai tuoi dati di ricerca.';
+var no_results_string = "<p style = 'text-align: center; font-size: xx-large; margin: 10px'>OPS!<br>Attualmente non ci sono persone che corrispondono ai tuoi dati di ricerca.</p>";
 
 $(document).ready(function(){
     prepareHome(true);
@@ -50,7 +50,7 @@ function prepareHome(firstAccess) {
 /**
 * Al click del bottone "Cerca", viene effettuata uan ricerca in base ai filtri inseriti.
 */
-$('#btnsearch').click(function(){ search(true)});
+$('#btnsearch').click(function(){search(true);});
 
 /**
  * Effettua una ricerca in base al parametro @param isASearch:
@@ -59,33 +59,34 @@ $('#btnsearch').click(function(){ search(true)});
  * @param {boolean} isASearch: indica se la ricerca è di default oppure è voluta dall'utente.
  */
 function search(isASearch){
-
     var pr = isASearch? $('#province').val() : 'null';
     var k =  $('#key').val() != ''? $('#key').val() : 'null';
     var min = $('#agemin').val() !=''? $('#agemin').val() : 'null';
     var max = $('#agemax').val() !='' ? $('#agemax').val() : 'null';
-    var only_null = pr == 'null' & k == 'null' & min == 'null' & max == 'null'; 
-    
-    if(isASearch & only_null) prepareHome();
+    var only_null = pr == 'null' && k == 'null'; // && min == 'null' && max == 'null'; 
+
+    if(isASearch && only_null) prepareHome(false);
     else{
-
-        $.get('/api/search/' + pr + "/" + k +"/" + min + "/" + max, response =>{
-
+        
+        $.get('/api/search/' + pr + "/" + k +"/" + min + "/" + max, (response) =>{
+            
             response = JSON.parse(response);
+
+
             if(response.code == 400){
                 if(response.res == "") $.get('/', ()=>{ location.replace('../Welcome.html');});
                 else {
-                    alert(response.res);
                     search(false);
-                    return;
                 }
             } else if(response.code > 204) $('#results_research').html(template_home);
             else{
+
+
                 results = response.res;
                 visualizeResults();
                 $('#key').val('');
                 $('#province').val('');
-            }    
+            }
         })
     }
 };
@@ -94,8 +95,10 @@ function search(isASearch){
 * Prepara e visualizza il template per la sezione dei risultati di ricerca.
 */
 function visualizeResults(){
-    if(results.length == 0) $('#results_research').text(no_results_string);
+
+    if(results.length == 0) $('#results_research').html(no_results_string);
     else{
+
         var color;
         $('#results_research').html('');
         template_home ='';
@@ -161,7 +164,6 @@ $('#send_btn').click(function(){
             result = JSON.parse(result);
             if(result.code != 200 ) $('#send_message_error').text(result.message);
             else{ 
-                alert(result.message);
                 $("#send_message_window input[type= 'text']").val('');
                 $('#send_message_window').hide();
             }
@@ -177,6 +179,6 @@ $('.cancel_btn').click(function () {
 })
 
 $('#navbar').click(function(){
-    if(('#navbarSupportedContent').css('display') == 'block') $('#navbarSupportedContent').hide();
+    if($('#navbarSupportedContent').css('display') == 'block') $('#navbarSupportedContent').hide();
     else $('#navbarSupportedContent').show();
 })

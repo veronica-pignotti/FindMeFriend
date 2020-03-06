@@ -45,15 +45,15 @@ module.exports.checkUser = (user) =>{
 }
 
 module.exports.checkInterest = (interest) =>{
-        interest = {
-                name : this.checkString(interest.name),
-                key1 : this.checkString(interest.key1), 
-                key2 : interest.key2 == "null"? "" : this.checkString(interest.key2), 
-                key3 : interest.key3 == "null"? "" : this.checkString(interest.key3), 
-                key4 : interest.key4 == "null"? "" : this.checkString(interest.key4),        
-                description: this.checkString(interest.description)
-            }
-    return (!interest.name || !interest.key1 || !interest.key2 || !interest.key3 || !interest.key4 || !interest.description ) ? null : interest;
+    interest = {
+        name : this.checkString(interest.name),
+        key1 : this.checkString(interest.key1), 
+        key2 : interest.key2 == "null"? "" : this.checkString(interest.key2), 
+        key3 : interest.key3 == "null"? "" : this.checkString(interest.key3), 
+        key4 : interest.key4 == "null"? "" : this.checkString(interest.key4),        
+        description: this.checkString(interest.description)
+    }
+    return !interest.name || !interest.key1 || interest.key2== null || interest.key3== null || interest.key4 == null || !interest.description  ? null : interest;
 }
 
 module.exports.decodeInterest = (interest) =>{

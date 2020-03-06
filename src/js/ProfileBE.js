@@ -1,6 +1,6 @@
 var connection = require('./Database').connection;
 var security = require('./Security');
-
+var fs = require('fs');
 /*******************************************MODIFICA ELEMENTO*************************************************************/
 
 /**
@@ -118,6 +118,7 @@ module.exports.deleteProfileUpdate = (email, response)=>{
                 obj = err?
                     {code : 500, message : "Si è verificato un errore durante la connessione con il database."}:
                     {code: 201, message:'La tua cancellazione è andata a buon fine! Non sei più registrato.'};
+                if(obj.code == 201) fs.writeFile('session.json', "", () =>{});
                 response.end(JSON.stringify(obj));
             });
         }
@@ -146,6 +147,11 @@ module.exports.setPasswordUpdate = (oldpass, newpass, email, response) =>{
     })
 };
 
+/******************************************************LOGOUT*****************************************************/
+module.exports.logoutUpdate = (response) =>{
+    fs.writeFile('session.json', "", () =>{response.end(JSON.stringify({code : 200}))})
+};
+
 /**
  * Aggiorna il file session.json a seconda del parametro table specificato, in modo da non riaggiornarlo tutto,
  * ma solo la sezione che ha subito modifiche.
@@ -157,7 +163,7 @@ function updateFile(table, email){
     var column = table =="User"? "Email":"User";
     connection.query("SELECT * FROM " + table + " WHERE " + column +  " = '" + email + "'", (err, resQuery) => {
 
-        var fs = require('fs');
+        
         fs.readFile('session.json', (err, s) =>{
             s = JSON.parse(s);
 

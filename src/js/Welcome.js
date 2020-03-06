@@ -8,15 +8,12 @@ $('#loginbtn').click(function(){
     if (!(email && password)) $('#login_error').text('Inserisci email e password.');
     else{
         $.get('/api/authentication/'+ email + '/' + password, (resultAuth) =>{
-
-            console.log("JSON.parse(resultAuth).message = " + JSON.parse(resultAuth).message);
             
             resultAuth = JSON.parse(resultAuth).message;
 
             if(resultAuth !='') $('#login_error').text(resultAuth); 
             else{
-                $.post('/api/savesession/' + email);
-                location.replace('../FindMeFriend.html');
+                $('#page').load('./FindMeFriend.html');
             }
         });
     } 
@@ -64,7 +61,12 @@ $('#btnregistration').click(function(){
                 province: province
             }
             $.post('/api/insertuser', obj, (res)=>{
-                $('#reg_message').text(JSON.parse(res).message);
+                res = JSON.parse(res);
+                if(res.code != 201) $('#reg_message').text(res.message);
+                else{
+                    alert(res.message);
+                    $('#registration_window').hide();
+                }
             });    
         }
     }
