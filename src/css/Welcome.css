@@ -1,32 +1,34 @@
 body{
     background: url('../../images/orangeyellow.jpg') no-repeat center fixed;
     background-size: cover;
-    height: fit-content;
-    padding: 10px;
 }        
 
 h1{
-    text-align: center;
-    text-decoration-style: double;
+text-align: center;
+text-decoration-style: double;
 }
 
 
 /* div di login*/
 #accesso{
-    padding: 30px;
-    margin-left: 100px;
-    border-style: dashed;
-    border-color: darkgreen;
-    background: url('../../images/greenblue.jpg');
+height: 400px;
+padding: 30px;
+margin-left: 50px ;
+margin-top: 30px;
+border-style: dashed;
+border-color: darkgreen;
+background: url('../../images/greenblue.jpg') ;
 }
+
+
+
+
 
 /*bottone di registrazione*/
 #registration_btn {
-    margin-top: 100px;
-    margin-left: 300px;
-    font-size: 30px; 
-    border-radius: 15px 40px;
-    background-color: brown;
+margin-left: 30%;
+font-size: 100%; 
+border-radius: 15px 40px;
 }
 
 
@@ -34,64 +36,74 @@ h1{
 
 /*bottone di login*/
 #loginbtn{
-    font-size: 20px;
-    text-align: center;
-    margin-top: 20px;
-    border-radius: 15px 40px;
-    background-color: darkblue;
+margin-right: 5%;
+font-size: 100%;
+text-align: center;
+border-radius: 15px 40px;
+
+
 }
 
 /*div di ask*/
-#feedback{
-    padding: 10px;
-    size: 5px;
-    border-style: dashed;
-    border-color: rgb(100, 15, 0);
-    background: url(../../images/redyellow.jpg) ;
-    background-size: cover;
+#ask{
+margin-top: 30px;
+padding: 10px;
+
+border-style: dashed;
+border-color: rgb(100, 15, 0);
+background: url(../../images/redyellow.jpg) ;
+background-size: cover;
 }
 
 #testopresentazionesito{
-    text-align: center;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 30px;
+text-align: center;
+font-family: "Times New Roman", Times, serif;
+font-size: 30px;
+
 }
 
 #loginemail{
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     font-size: 20px;
+
 }
 
 #loginpassword{
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     font-size: 20px;
+
 }
 
 #mitt{
     border-radius: 10px;
     font-size: 10px;
+   
 }
 
 #obj{
     border-radius: 10px;
     font-size: 10px;
+    
 }
 
 #text{
     min-height: 150px;
     max-height: 150px;
+    min-width: 90%;
+    max-width: 90%;
     margin-top: 30px;
+    margin-left: 10px;
 }
 
 #titolo{
-    text-align: center;
+    
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
 }
 
 #btnregistration {
-    margin-left: 100px;
+    margin-left: 10%; 
     color: rgb(0, 0, 0);
     text-align: center;
     padding: 10px 25px;
@@ -101,29 +113,32 @@ table{
     margin-left:100px;
     border-spacing: 10px;
     text-align: left;
+    
 }
 
+
 #registration_window{
-    margin-top: -550px;
-    margin-left: 340px ;
+    
     border: 1px solid black;
-    width: 850px;
-    height: 500px;
+    width: 100%;
+    padding: 20px;
+    min-height: 500px;
     border-radius: 10px;
     background-color: white;
+    background-position: center center; 
     display: none;
-    position: absolute;
 }
 
 
 #buttonback{
-    margin-left: 350px;
-    margin-top: -50px;
+    float: right;
+    margin-right: 10%;    
     font-size: 25px;
+    float: right;
 }
 
 #la{
-    margin-left: 100px;
+    margin-left: 50px;
 }
 
 #pp{
@@ -137,56 +152,28 @@ table{
     height: 130px;
 }
 
-#regname{
+
+
+#regpassword , #regemail , #regname , #regyear{
     border-radius: 20px;
-    
+    width: 50%;
+   
 }
 
-#regsurname{
-    margin-left: 100px;
-    border-radius: 20px;
-    
-}
-
-#regyear{
-    border-radius: 20px;
-    
-}
-
-#regnickname{
-    margin-left: 100px;
+#regnickname , #regrepeatpassword , #regprovincie , #regsurname{
+    margin-left: 50px;
      border-radius: 20px;
+     width: 50%;
 }
 
-#regpassword{
-    border-radius: 20px;  
-}
 
-#regrepeatpassword{
-    margin-left: 100px;
-     border-radius: 20px;
-}
 
-#regemail{
-    border-radius: 20px;  
-}
-
-#regprovincie{
-    margin-left: 100px;
-    border-radius: 20px;
-}
-
-#userlogo{
+#userlogo, #psswlogo{
    background-attachment: fixed;
    width: 40px;
    height: 40px;
 }
 
-#psswlogo{
-    background-attachment: fixed;
-    width: 40px;
-    height: 40px;
- }
 
  #send{
      margin-left: 200px;
@@ -196,4 +183,26 @@ table{
  #pass{
     border-radius: 10px;
     font-size: 10px;
+ }
+
+ #tabellaaccesso{
+    width: 100px;
+    height: 40px;
+    margin-right: 0%;
+    margin-left: 30px;
+
+
+ }
+
+ #tabellabella{
+     margin-left: 50px;
+     width: fit-content;
+
+ }
+ #tabellabella span{
+  width: 40%;
+ }
+
+ #tabellabella td{
+     width: 50%;
  }

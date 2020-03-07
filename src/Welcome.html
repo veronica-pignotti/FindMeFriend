@@ -1,13 +1,12 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <link href="./css/Welcome.css" rel="stylesheet" type="text/css">
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="manifest" href="/manifest.json">
+    <link href="../css/Welcome.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src ="./js/serviceworkerregistration.js"></script-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 </head>
  <body>
     <h1>
@@ -15,54 +14,54 @@
     </h1>
      <div class="conteiner">
          <div class="row">
-             <div class="col-sm-12">
+             <div class="col-xs-12 col-sm-12">
                 <p id="testopresentazionesito" class="text-dark">
-                Benvenuto in Find Me Friend!<br>
-                Sei in cerca di nuove amicizie o non hai nessuno con cui condividere le tue passioni e hobby?<br>
-                Questo è il sito che fa per te: ti aiuta a trovare persone vicino a te con cui condividere i tuoi interessi.<br>
-                Se ti iscriverai dovrai ripettare delle semplici regole di buona condotta:<br> niente insulti, niente contenuti inappropriati(razzismo, sesso,ecc.), offensivi o volgari.<br>
-                Vogliamo che si crei un ambiente di amicizia e rispetto per gli altri.<br>
-                Se non si ripettano le regole, l'account verrà eliminato.
+                Benvenuto in Find Me Friend , sei in cerca di nuove amicizie? Questo è il sito che fà per te,se non hai amici con cui condividere le tue passioni o i tuoi hobby,
+                questo sito ti auta a trovare persone vicino a te con cui condividere i tuoi interessi. 
+                Se ti iscriverai dovrai ripettare le regole di buona condotta : niente insulti , niente contenuti inappropriati(razzismo,sesso,ecc.).
+                Vogliamo che si crei un ambiente di amicizia e rispetto per gli altri.
+                Se non si ripettano le regole l'account verrà eliminato.
                 </p>
              </div>
          </div>
      </div>
        
      <div class="conteiner">
-        <div class="row">
-            <div class="col-sm-6">
-                <input type ="button" value="Registrati"  id = "registration_btn" class="btn btn-primary">  
-            </div>
-            <div class="col-sm|md|lg-6">
-
-<!---------------------------------------------LOGIN---------------------------------------------------->
-                <div id=accesso>
+        <div class="row ">
+            <div class="col-xs-6 col-sm-6">
+                 <div id=accesso>
                     <p id="login_error"></p>
                     <p><b>E-mail</b></p>
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend" >
                             <img class="input-group-text" src="../../images/usericona.png" id="userlogo">
                         </div>
-                        <input type="email" id= "loginemail" class="form-control" >
-                    </div>
+                          <input type="email" id= "loginemail" class="form-control" >
+                    </div>                
                     <p><b>Password</b></p>
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                           <img class="input-group-text" src="../../images/iconapssw.png" id="psswlogo">
                         </div>
                         <input type="password" id = "loginpassword" class="form-control" >
+                    </div>  
+                   
+                           
+                            <table id="tabellaaccesso">
+                         <tr>
+                             <th><input type="button" value= Accedi  id="loginbtn" class="btn btn-primary"></th>
+                             <th><input type ="button" value="Registrati"  id = "registration_btn" class="btn btn-primary"> </th>
+                         </tr>
+                          </table>   
                     </div>
-                    <input type="button" value= Accedi  id="loginbtn" class="btn btn-primary">
                 </div>
-            </div>
-        </div>
-     </div>
+            
 
-     <div class="conteiner">
-         <div class="row">
-            <div class="col-sm-6">
-<!-----------------------------------FEEDBACK------------------------------------------------------------------------>
-        <div id="feedback"> 
+        
+    <div class="col-sm-6 col-xs-6">
+
+  <div id="ask" >
+            
             <p id="pp"><b>Ask Me Friend</b></p>
             <p id="send_feedback_message" ></p>
             <p><b>E-mail</b></p>
@@ -77,12 +76,15 @@
             </textarea>
             <input type="button" id="send" class="btn btn-success" value="Invia">
             </div>
-            </div>
-         </div>
+    </div>
      </div>
-<!---------------------------------------REGISTRATION--------------------------------------------------------------->
+</div>
+
+            
+
+
      <div id="registration_window">
-        <h1 id="titolo">Scheda di registrazione</h1>
+        <h1 id="titolo" class="text-center">Scheda di registrazione</h1>
         <table id="tabellabella">
             <tr>
                 <th><span>Nome: </span></th>
@@ -96,8 +98,8 @@
                 <th><span>Anno di nascita :</span></th>
                 <th ><span id="la">Nickname :</span></th>
             </tr><tr>
-                <td><input type="number" step = "1" id="regyear" class="form-control"></td>
-                <td ><input type ="text" id="regnickname" class="form-control" ></td>
+                <td><input type="number" min = "18" max ="30" id="regyear" class="form-control"></td>
+                <td ><input type ="text"   id="regnickname" class="form-control" ></td>
             </tr>
             <tr>
         
@@ -218,15 +220,21 @@
                     <option value="VR">VR</option>
                     <option value="VV">VV</option>
                     <option value="VI">VI</option>
-                    <option value="VT">VT</option>  
+                    <option value="VT">VT</option>
+                    
+
+                
             </select></td>
-        </tr>
+            </tr>
+
     </table>  
-    <p id="reg_message"></p>
-        <input type ="button" value="Registrati" id = "btnregistration" class="btn btn-success">
-        <p><input type="button"   value="Annulla" id="buttonback" class="cancel_btn btn btn-warning"></p>
+    <p id="registrationmessage"></p>
+        <p>
+            <input type ="button" value="Registrati" id = "btnregistration" class="btn btn-success">
+            <input type="button" value="Annulla" id="buttonback" class="cancel_btn btn btn-warning">
+        </p>
         </div>      
     </div>
-    <script src="../js/Welcome.js"></script>
+    <script src="../js/Welcome.js"></script></div>
     </body>
 </html>

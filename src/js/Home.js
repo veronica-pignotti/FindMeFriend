@@ -81,7 +81,6 @@ function search(isASearch){
             } else if(response.code > 204) $('#results_research').html(template_home);
             else{
 
-
                 results = response.res;
                 visualizeResults();
                 $('#key').val('');

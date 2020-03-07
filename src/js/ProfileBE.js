@@ -12,7 +12,8 @@ var fs = require('fs');
 */
 module.exports.setInformationUpdate = (column, value, email, response)=>{
     if(!security.checkString(value)) response.end(JSON.stringify({code : 400, message : 'Non puoi inserire i caratteri " < >.'}));
-    else {connection.query("UPDATE User SET " + column + " = '" + value + "' WHERE Email = '" + email + "'", (err) => {
+    else {
+        connection.query("UPDATE User SET " + column + " = '" + value + "' WHERE Email = '" + email + "'", (err) => {
         var obj = err? 
             ( err.toString().indexOf("ER_DUP_ENTRY: Duplicate entry '" + value)!= -1? 
                 {code: 205, message: "Nickname già utilizzato!"}: 
@@ -21,8 +22,8 @@ module.exports.setInformationUpdate = (column, value, email, response)=>{
         if (err) console.log(err);
         else updateFile('User', email);
         response.end(JSON.stringify(obj));
-    }); 
-}
+        }); 
+    }
 }
 
 /**
