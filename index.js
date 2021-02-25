@@ -23,25 +23,28 @@ app.use(express.static('src'));
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get(['/'], (req, res) => {
+  res.redirect("index.html");
+});  
+
 /**
  * All'avvio dell'applicazione, si controlla se ci sono delle informazioni nel file di cache "session.json". 
  * Se si verificano errori, l'utente deve effettuare l'autenticazione, altrimenti può utilizzare l'applicazione, 
  * poiché già autenticato.
- */
-app.get(['/'], (req, res) => {
+ */  
+app.get(['/page'], (req, res)=>{
   fs.readFile('session.json', (error, data)=>{
     try{
-      if(error) throw new Error();
+      if(error || data.length == 0) throw new Error();
       else{
         data = JSON.parse(data);
-        res.redirect("FindMeFriend.html");
+        res.end(JSON.stringify({code : 1}));
       }
     }catch(err){
-      fs.writeFile('session.json', "In questo file verranno memorizzati, in formato JSON, i dati della tua sessione.", () =>{res.redirect("Welcome.html");});
+      fs.writeFile('session.json', "In questo file verranno memorizzati, in formato JSON, i dati della tua sessione.", () =>{res.end(JSON.stringify({code : 0}));});
     }
   })
-});  
-  
+})
 
 /*****************************************************SESSION*************************************************/
 
@@ -73,6 +76,11 @@ app.get(['/api/search/:province/:word/:yearMin/:yearMax'], (req, res) =>{
   var max = req.params.max == 'null'? null: req.params.yearMax;
   hbe.search(province, word, min, max, res);
 })
+
+app.post(['/api/search'], (req, res) =>{
+  hbe.search(req.body.province, req.body.key, req.body.min, req.body.max, res);
+})
+
 
 app.get(['/api/getmissinginformations/:email'], (req, res) =>{
   hbe.getMissingInformations(req.params.email, res);
@@ -106,6 +114,9 @@ app.put(['/api/setpassword/:old/:new/:email'], (req, res) =>{
   pbe.setPasswordUpdate(req.params.old, req.params.new, req.params.email, res);
 })
 
+app.get(['/api/logout'], (req, res)=>{
+  pbe.logoutUpdate(res);
+})
 /****************************************EMAIL***************************************************************/
 
 app.post(['/api/sendemail'], (req, res) =>{ 
