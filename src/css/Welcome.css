@@ -8,58 +8,93 @@ text-align: center;
 text-decoration-style: double;
 }
 
-
-/* div di login*/
-#accesso{
-height: 400px;
-padding: 30px;
-margin-left: 50px ;
-margin-top: 30px;
-border-style: dashed;
-border-color: darkgreen;
-background: url('../../images/greenblue.jpg') ;
+#div_img{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
 }
 
+#logoimg{
+    width: 60%;
+    height: auto;
+    
+}
 
+#testopresentazionesito{
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 28px;
+    padding: 2%
+}
 
+.campo{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
 
+.pbuttonwindow{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}
+
+#div_windows{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+    padding: 2%;
+}
+
+/*****************************************LOGIN*********************************************************************/
+/* div di login*/
+#accesso{
+    height: fit-content;
+    padding: 2%;
+    border-style: dashed;
+    border-color: darkgreen;
+    background: url('../../images/greenblue.jpg');
+    width: 40%;
+}
 
 /*bottone di registrazione*/
 #registration_btn {
-margin-left: 30%;
 font-size: 100%; 
 border-radius: 15px 40px;
 }
 
 
-
-
 /*bottone di login*/
 #loginbtn{
-margin-right: 5%;
-font-size: 100%;
-text-align: center;
-border-radius: 15px 40px;
-
-
+    margin-right: 5%;
+    font-size: 100%;
+    text-align: center;
+    border-radius: 15px 40px;
 }
 
 /*div di ask*/
 #ask{
-margin-top: 30px;
-padding: 10px;
-
-border-style: dashed;
-border-color: rgb(100, 15, 0);
-background: url(../../images/redyellow.jpg) ;
-background-size: cover;
+    padding: 2%;
+    border-style: dashed;
+    border-color: rgb(100, 15, 0);
+    background: url(../../images/redyellow.jpg) ;
+    background-size: cover;
+    width: 40%;
 }
 
-#testopresentazionesito{
-text-align: center;
-font-family: "Times New Roman", Times, serif;
-font-size: 30px;
-
+#ask input{
+    margin: 2.5% 0px;
 }
 
 #loginemail{
@@ -73,7 +108,6 @@ font-size: 30px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     font-size: 20px;
-
 }
 
 #mitt{
@@ -85,124 +119,68 @@ font-size: 30px;
 #obj{
     border-radius: 10px;
     font-size: 10px;
-    
 }
 
 #text{
-    min-height: 150px;
-    max-height: 150px;
-    min-width: 90%;
-    max-width: 90%;
-    margin-top: 30px;
-    margin-left: 10px;
+    min-height: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 #titolo{
-    
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
 }
 
 #btnregistration {
-    margin-left: 10%; 
     color: rgb(0, 0, 0);
     text-align: center;
-    padding: 10px 25px;
 }
 
 table{
-    margin-left:100px;
     border-spacing: 10px;
     text-align: left;
     
 }
 
-
-#registration_window{
-    
-    border: 1px solid black;
-    width: 100%;
-    padding: 20px;
-    min-height: 500px;
-    border-radius: 10px;
-    background-color: white;
-    background-position: center center; 
+.action_window{
+    background: url('../../images/greenblue.jpg') no-repeat center fixed;
+    background-size: cover;
+    position: fixed;
     display: none;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: fit-content;
+    width: fit-content;
+    padding: 2%;
+    border: 1px solid black;
+    border-radius: 10px;
+ }
+
+#registration_window table th, #registration_window table td{
+    padding: 2%;
 }
-
-
-#buttonback{
-    float: right;
-    margin-right: 10%;    
-    font-size: 25px;
-    float: right;
-}
-
-#la{
-    margin-left: 50px;
-}
-
-#pp{
-    margin-left: 20px;
-    text-align: center;
-    font-family: cursive;
-}
-
-#logoimg{
-    width: 300px;
-    height: 130px;
-}
-
-
 
 #regpassword , #regemail , #regname , #regyear{
     border-radius: 20px;
-    width: 50%;
+    width: 100%;
    
 }
 
 #regnickname , #regrepeatpassword , #regprovincie , #regsurname{
-    margin-left: 50px;
      border-radius: 20px;
-     width: 50%;
+     width: 100%;
 }
-
 
 
 #userlogo, #psswlogo{
-   background-attachment: fixed;
-   width: 40px;
-   height: 40px;
+   height: 43px;
 }
-
-
- #send{
-     margin-left: 200px;
-     margin-top: 20px;
- }
 
  #pass{
     border-radius: 10px;
     font-size: 10px;
- }
-
- #tabellaaccesso{
-    width: 100px;
-    height: 40px;
-    margin-right: 0%;
-    margin-left: 30px;
-
-
- }
-
- #tabellabella{
-     margin-left: 50px;
-     width: fit-content;
-
- }
- #tabellabella span{
-  width: 40%;
- }
-
- #tabellabella td{
-     width: 50%;
  }

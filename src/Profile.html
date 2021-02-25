@@ -4,78 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <link href="../css/Profile.css" rel="stylesheet" type="text/css">
+    <link href="../css/ProfileMediaQuery.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-    <h1 class="text-center">Il tuo profilo</h1>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6 col-sm-6">
-
-                <p id="titoloinf">Le tue informazioni</p>
-                <div id='informations'></div>
-                <input type="button" value="Cancella profilo" id="delete_profile_btn" class="btn btn-danger">
-                <input type="button" value="Modifica password" id="set_password_btn" class="btn btn-danger">
-                <input type="button" value="Esci" id="logout_btn" class="btn btn-danger">
-                
-            </div>
-
-            <div class="col-xs-6 col-sm-6">
-                <input type="button" value="Aggiungi Interesse" id="btn_add_interest" class="btn btn-primary">
-                <div id='interests'></div>
-            </div>
+    <div class="titolo" id='titolo1'>
+        <p>Le tue informazioni</p>
+        <img id="opt" src='./images/opt.png'>
+        <div>
+            <input type="button" value="Cancella profilo" id="delete_profile_btn" class="btn btn-success">
+            <input type="button" value="Modifica password" id="set_password_btn" class="btn btn-success">
+            <input type="button" value="Esci" id="logout_btn" class="btn btn-success">
         </div>
     </div>
+
+    <div id='informations'></div>
+
+
+    <div class="titolo" id="titolo2">
+        <p class="titoloinf">Interessi</p>
+        <input type="button" value="Aggiungi Interesse" id="btn_add_interest" class="btn btn-success">
+    </div>
+    <div id='interests'></div>
+
 
     <!--SET WINDOW-->
     <div id="set_window" class='action_window'>
         <input type="text" id="set_window_input" class="form-control">
-        <p>
-            <table id="tabellaset">
-                <tr>
-                    <th><input type="button" id="set_window_ok_button" value="Conferma" class="btn btn-success"></th>
-                    <th><input type="button" id="annullabtn" class="btn btn-danger" value="Annulla"></th>
-                </tr>
-            </table>
+        <p class="pbuttonwindow">
+            <input type="button" id="set_window_ok_button" value="Conferma" class="btn btn-success">
+                <th><input type="button" id="annullabtn" class="btn btn-danger" value="Annulla">
         </p>
     </div>
 
     <!--ADD INTEREST WINDOW-->
     <div id="add_interest_window" class='action_window'>
-        <div class="conteiner">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6" id="elementstyle">
-                    <p>Inserisci un interesse <p id="add_interest_message"></p>
-                    </p>
-                    <p>Nome</p>
-                    <input type="text" id="new_name">
-                    <p>1-Inserisci fino a 4 parole chiave:</p>
-                    <list>
-                        <ol>
-                            <li><input type="text" id="new_key1" class="form-control"></li>
-                            <li><input type="text" id="new_key2" class="form-control"></li>
-                            <li><input type="text" id="new_key3" class="form-control"></li>
-                            <li><input type="text" id="new_key4" class="form-control"></li>
-                        </ol>
-                    </list>
-                </div>
+        <h1>Inserisci un interesse</h1>
+        <p id="add_interest_message"></p>
+        <table>
+            <tr>
+                <th>Nome</th>
+                <td><input type="text" id="new_name" class="form-control"></td>
+            </tr>
+            <tr>
+                <th rowspan="4">Inserisci fino a 4 parole chiave:</th>
+                <td><input type="text" id="new_key1" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="new_key2" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="new_key3" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="new_key4" class="form-control"></td>
+            </tr>
+            <tr>
+                <th colspan="2"> Descrizione</th>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea id="new_description"></textarea></td>
+            </tr>
+        </table>
 
-                <div class="col-xs-6 col-sm-6">
-                    <p>Descrizione</p>
-                    <textarea id="new_description"></textarea>
-                </div>
-
-
-            </div>
-        </div>
-
-
-        <p>
+        <p class="pbuttonwindow">
             <input type="button" value="Aggiungi interesse" id="add_interest_add_button" class="btn btn-success">
             <input type="button" value="Annulla" class="cancel_btn btn btn-danger" id="indietrobtn">
         </p>
-
 
     </div>
 
@@ -85,40 +81,44 @@
     <div id="delete_interest_window" class='action_window'>
         <div id='delete_interest_window_interest'></div>
         <p class="text-center"><b>Sei sicuro di voler elminare questo interesse?</b></p>
-        <p>
+        <p class="pbuttonwindow">
             <input type="button" value="Si" id="delete_interest_yes_button" class="btn btn-warning">
             <input type="button" value="No" class="cancel_btn btn btn-success" id="nobutton">
         </p>
     </div>
-    
-
-
 
     <!--DELETE PROFILE WINDOW-->
     <div id="delete_profile_window" class='action_window'>
         <p class="text-center"><b>Sicuro di voler cancellare il tuo profilo?</b></p>
-        <p>
+        <p class="pbuttonwindow">
             <input value="Si" type="button" id="delete_profile_yes_btn" class="btn btn-warning">
             <input value="No" type="button" class="cancel_btn btn btn-success" id="cancelbtn">
         </p>
     </div>
 
 
-
     <!--SET PASSWORD-->
     <div id="set_password_window" class='action_window'>
-        <p class="text-center">Vecchia password: <input type="password" id="old_password_input"></p>
-        <p class="text-center">Nuova password: <input type="password" id="new_password_input"></p>
-        <p class="text-center">Ripeti nuova password: <input type="password" id="repeat_new_password_input"></p>
-        <p>
+        <table>
+            <tr>
+                <th>Vecchia password:</th>
+                <td><input type="password" id="old_password_input"></td>
+            </tr>
+            <tr>
+                <th>Nuova password:</th>
+                <td><input type="password" id="new_password_input"></td>
+            </tr>
+            <tr>
+                <th>Ripeti nuova password:</th>
+                <td><input type="password" id="repeat_new_password_input"></td>
+            </tr>
+        </table>
+        <p class="pbuttonwindow">
             <input type="button" id="set_password_ok_btn" value="Conferma" class="btn btn-danger">
             <input type="button" class="cancel_btn btn btn-success" value="Annulla" id="indietrocambiopassword">
         </p>
         <p id="set_password_message"></p>
     </div>
-    </div>
-
-
 
     <script src="../js/Profile.js"></script>
 </body>

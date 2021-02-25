@@ -1,0 +1,75 @@
+@media screen and (max-width: 900px) {
+    #interests .businesscard {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    #informations .businesscard {
+        width: 70%;
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+    .titolo input[type='button'] {
+        font-size: 12px;
+    }
+
+}
+
+@media screen and (max-width: 640px) {
+    #interests .businesscard {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .titolo p {
+        font-size: 25px;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    #titolo1 img {
+        display: block;
+        height: 30px;
+    }
+    #titolo1 div{
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 540px) {
+    #informations .businesscard {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 450px) {
+    #interests .businesscard {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    #informations .businesscard {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 370px) {
+    #titolo1  {
+        flex-wrap: wrap-reverse;
+    }
+
+    #interests .businesscard {
+        width: 100%;
+    }
+
+
+}

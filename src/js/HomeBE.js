@@ -22,7 +22,6 @@ module.exports.search = (province, word, ageMin, ageMax, response) => {
 
     fs.readFile('session.json', (err, data) => {
         data = JSON.parse(data);
-        
         if (err) {
             console.log("C'è stato un errore con la lettura del file : " + err);
             response.end(JSON.stringify({ code: 417, res: "C'è stato un errore con la lettura del file"}));
@@ -116,8 +115,8 @@ function extractCommonInterests(searchByWord, interested_people, user_interests,
             if(user_interests.length!=0){
                 var name;
                 user_interests.forEach(inter => {
-                    name = inter.Name;
-                    if (name == row.Name | name == row.Key1 | name == row.Key2 | name == row.Key3 | name == row.Key4) table[table.length - 1].CommonInterests.push(security.decodeString(name));
+                    name = inter.Name.toUpperCase();
+                    if (name == row.Name.toUpperCase() | name == row.Key1.toUpperCase() | name == row.Key2.toUpperCase() | name == row.Key3.toUpperCase() | name == row.Key4.toUpperCase()) table[table.length - 1].CommonInterests.push(security.decodeString(name));
                 });
                 table.forEach(r => { r.Compatibility = Math.round(r.CommonInterests.length * 100 / user_interests.length) });
             } 

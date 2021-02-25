@@ -24,11 +24,11 @@ function prepareProfile(){
  * Costruisce il template per le informazioni.
  */
 function showInformations(){
-    template_informations = "<table id='tabellainformazioni'><tr><th><span>Nome: </span></th><td><p>"+session.Name+"</p></td></tr>"+
+    template_informations = "<div class='businesscard'><table id='tabellainformazioni'><tr><th><span>Nome: </span></th><td><p>"+session.Name+"</p></td></tr>"+
         "<tr><th><span>Cognome: </span></th><td><p>"+session.Surname+"</p></td></tr>"+
         "<tr><th><span>Nickname: </span></th><td><p ondblclick= "+'"' + "set('info_Nickname') " + '"' + ">" + session.Nickname+"</p></td></tr>"+
         "<tr><th><span>Anno di nascita: </span></th><td><p>"+ session.Year+"</p></td></tr>" +
-        " <tr><th><span>Provincia: </span></th><td><p ondblclick= "+'"' + "set('info_Province') " + '"' + ">"+session.Province+"</p></td></tr></table>";
+        " <tr><th><span>Provincia: </span></th><td><p ondblclick= "+'"' + "set('info_Province') " + '"' + ">"+session.Province+"</p></td></tr></table></div>";
     $('#informations').html(template_informations);    
 }
 
@@ -36,13 +36,14 @@ function showInformations(){
  * Costruisce il template per gli interessi.
  */
 function showInterests() {
-    template_interests = "<h1 class='text-center'>Interessi</h1>"
+    template_interests = "";
     session.Interests.forEach((inter, index)=>{
-        template_interests += " <table class = 'tabellainteressi'><tr><th>Nome interesse: </th><td ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr><tr><th>Key 1 : </th><td ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>";
+        template_interests += "<div class= 'businesscard'><table class = 'tabellainteressi'><tr><th>Nome interesse: </th><td ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr><tr><th>Key 1 : </th><td ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>";
         template_interests += "<tr><th>Key 2: </th><td id = 'inter_Key2-"+index+"' ondblclick= "+'"' + "set('inter_Key2-"+index+"') "+'"' + ">" + (inter.Key2 == null? "" : inter.Key2) +"</td></tr>"
         template_interests += "<tr><th>Key 3 : </th><td ondblclick= "+'"' + "set('inter_Key3-"+index+"') "+'"' + ">" + (inter.Key3 == null? "" : inter.Key3) +"</td></tr>";
-        template_interests += "<tr><th>Key 4 : </th><td ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr></table>";
-        template_interests+= "<p class = 'descr' ><b>Descrizione: </b></p><p class = 'descr' ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</p><input type='button' id= 'eliminainteresse' class='delete_interest_btn btn btn-danger' value='Elimina interesse' onclick= "+'"' + "deleteInterest("+index+") "+'"' + ">";
+        template_interests += "<tr><th>Key 4 : </th><td ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr>";
+        template_interests+= "<tr><th class = 'descr' colspan=2><b>Descrizione: </b></th></tr>"+
+        "<tr><td colspan=2 ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</td></tr><tr><td colspan= 2 class='tdbtn'><input type='button' id= 'eliminainteresse' class='delete_interest_btn btn btn-danger' value='Elimina interesse' onclick= "+'"' + "deleteInterest("+index+") "+'"' + "></td></tr></table></div>";
     }); 
     $.get('/api/getrules', (rules)=>{
         rules = JSON.parse(rules);
@@ -57,14 +58,8 @@ function showInterests() {
 * dell'elemento.
 */
 function set(item){
-    $('#set_window').show();
+    $('#set_window').css({"display": "flex"});
     last_item = item;
-    var x = 'td [ondblclick="set(' + "'"+ item + "')" +'"]';
-    var y = '[ondblclick="set(' + "'"+ item + "')" +'"]';
-    console.log($("#"+ item).text());
-    console.log($(x).text());
-    console.log($(y).text());
-
     $('#set_window_input').val($(x).text());
 };
 
@@ -281,4 +276,12 @@ $('#logout_btn').click(function(){
     $.get('/api/logout', result =>{
         $('#page').load('./Welcome.html');
     })
+})
+
+$('#opt').click(function(){
+    if($('#titolo1 div').css('display')!='none'){//se si legge
+        $('#titolo1 div').hide();
+    }else{
+        $('#titolo1 div').show();
+    }
 })

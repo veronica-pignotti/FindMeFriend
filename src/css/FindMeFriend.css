@@ -6,23 +6,50 @@ body{
     padding: 10px;
 }
 
+
+#first{
+    display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
 #logoimg{
     width: 40%;
     height: 30%;
     margin-left: 30%;
-    
-    
+}
+
+#divico{
+    width: 33%;
+    display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+#divico img{
+    width: 15%;
+    margin: 10px;
 }
 
 
+
+#div_button{
+    display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: stretch;
+	align-content: stretch;
+}
+
 #btn_home , #btn_profile{
     margin-top: 10px;
-    background-position: center center;
+   /* background-position: center center;*/
 }
 
 #content {
     margin-top: 10px;
-    width: 1300px;
     height: fit-content;
     border: none
 }
@@ -44,19 +71,6 @@ td p{
     margin-top: -60px;
 }
 
-
-
- #new_description{
-    width: 200px;
-    height: 100px;
-    margin-left:230px;
-    margin-top: -130px;
-    min-width: 200px;
-    min-height: 100px;
-    max-width: 200px;
-    max-height: 100px;
- }
-
  .action_window{
     background: url('../../images/greenblue.jpg') no-repeat center fixed;
     background-size: cover;
@@ -69,4 +83,16 @@ td p{
     bottom: 0;
     height: fit-content;
     width: fit-content;
+    padding: 2%;
+    border: 1px solid black;
+    border-radius: 10px;
  }
+
+ .pbuttonwindow{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}

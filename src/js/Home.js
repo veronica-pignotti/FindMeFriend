@@ -59,20 +59,23 @@ $('#btnsearch').click(function(){search(true);});
  * @param {boolean} isASearch: indica se la ricerca è di default oppure è voluta dall'utente.
  */
 function search(isASearch){
-    var pr = isASearch? $('#province').val() : 'null';
+    var params = {
+        province : !isASearch || $('#province').val() =="" ? null: $('#province').val(),
+        key : $('#key').val() != ''? $('#key').val() : null,
+        min : $('#agemin').val(),
+        max : $('#agemax').val() 
+    };
+
+    /*var pr = isASearch? $('#province').val() : 'null';
     var k =  $('#key').val() != ''? $('#key').val() : 'null';
     var min = $('#agemin').val() !=''? $('#agemin').val() : 'null';
-    var max = $('#agemax').val() !='' ? $('#agemax').val() : 'null';
-    var only_null = pr == 'null' && k == 'null'; // && min == 'null' && max == 'null'; 
+    var max = $('#agemax').val() !='' ? $('#agemax').val() : 'null';*/
+    var only_null = params.length == 2; //pr == 'null' && k == 'null'; // && min == 'null' && max == 'null'; 
 
     if(isASearch && only_null) prepareHome(false);
     else{
-        
-        $.get('/api/search/' + pr + "/" + k +"/" + min + "/" + max, (response) =>{
-            
+        $.post('/api/search', params, (response) =>{
             response = JSON.parse(response);
-
-
             if(response.code == 400){
                 if(response.res == "") $.get('/', ()=>{ location.replace('../Welcome.html');});
                 else {
@@ -103,7 +106,30 @@ function visualizeResults(){
         template_home ='';
         results.forEach(function(res, index){
             color = res.Compatibility < 34? 'red': res.Compatibility < 64? '#FFCC00': 'green';
-            $('#results_research').append(" <div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'><table id='tabellainformazioni'><tr><th><span>NickName :</span></th><td><p>"+ res.Nickname + "</p></td></tr><tr><th><span>Anno di nascita :</span></th><td><p>" + res.Year + "</p></td></tr><tr><th><span>Provincia :</span></th><td><p>" + res.Province + "</p></td></tr><tr><th><span>Interessi in comune :</span></th></tr><td><p>"+ res.CommonInterests +"</p></td></table><div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' class='btn btn-secondary' id='inviomessaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn btn btn-primary' id='apriprofilo' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>" );
+            $('#results_research').append(
+                "<div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'>"+
+                    "<table class='tabellainformazioni'>"+
+                        "<tr>"+
+                            "<th>NickName :</th><td>"+ res.Nickname + "</td>"+
+                        "</tr>"+
+                        "<tr><th>Anno di nascita :</th><td>" + res.Year + "</td>"+
+                        "</tr>"+
+                        "<tr>"+
+                            "<th>Provincia :</th><td>" + res.Province + "</td>"+
+                        "</tr>"+
+                        "<tr>"+
+                            "<th colspan='2'>Interessi in comune :</th>"+
+                        "</tr>"+
+                        "<td>"+ res.CommonInterests +"</td>"+
+                    "</table>"+
+                    "<div class = 'tabellaazioni'>"+
+                        "<div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div>"+
+                        "<input type='button' value='Invia un messaggio' class='btn btn-secondary' id='inviomessaggio' onclick = 'send( " + index + ")'>"+
+                        "<input type = 'button' class='open_profile_btn btn btn-primary' id='apriprofilo' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'>"+
+                    "</div>"+
+                "</div>"
+            );
+            //"<div style = 'background-color:" + color + " 'class = 'compability'>" + res.Compatibility + "%</div><p><input type='button' value='Invia un messaggio' class='btn btn-secondary' id='inviomessaggio' onclick = 'send( " + index + ")'><input type = 'button' class='open_profile_btn btn btn-primary' id='apriprofilo' value='Visualizza profilo' onclick = 'openProfile( " + index + ")'></p></div>" );
         });
     }
 };
@@ -116,6 +142,9 @@ function visualizeResults(){
 function send(index){
     $('#send_message_window').show();
     index_recipient= index;
+    $('#text').text("");
+    $('#psw').text("");
+
 }
 
 /**
@@ -149,7 +178,9 @@ function openProfile(index){
 */
 $('#send_btn').click(function(){
 
-    if($('#text').val() =='' || $('#psw').val()) $('#send_message_error').text('Inserisci la tua password e un messaggio!');
+    $('#send_message_error').text("");
+
+    if($('#text').val() =='' || $('#psw').val()== '') $('#send_message_error').text('Inserisci la tua password e un messaggio!');
     else if($('#text').val().length >= 500) $('#send_message_error').text('Ops! Il tuo messaggio è troppo lungo! \n Inserisci un messaggio più corto!');
     else {    
         var e = {
@@ -177,7 +208,23 @@ $('.cancel_btn').click(function () {
     $(this).parent().parent().hide();
 })
 
-$('#navbar').click(function(){
+/*$('#navbar').click(function(){
     if($('#navbarSupportedContent').css('display') == 'block') $('#navbarSupportedContent').hide();
     else $('#navbarSupportedContent').show();
+})*/
+
+$('#navbar #divimg').click(function(){
+    if($('.collaps').css('display') != 'none'){
+         $('.collaps').hide();
+        $('#navbar').css({
+            "flex-direction": "column"
+        });
+        }
+    else {
+        $('.collaps').show();
+        $('#navbar').css({
+            "flex-direction": "row"
+        });
+    }
 })
+

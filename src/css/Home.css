@@ -3,20 +3,82 @@
     margin-left: 20px;
 }
 
-.businesscard{
-    width:  80%; 
-    padding: 10px;
-    border-radius: 40px;
-    height: fit-content;
-    margin-top: 10px;
-    background-color: white;
-    margin-left: 10%;
-    
+nav{
+    display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: stretch;
+	align-content: stretch;
+    background-color: rgb(255, 60, 0);
 }
 
-.businesscard table{
+#navbar{
+    padding: 10px;
+    display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	align-content: stretch;
+    background-color: rgb(255, 60, 0);
+}
+
+#navbar .collaps{
+    display: flex;
+	flex-direction: row;
+    align-items: center;
+	align-content: stretch;
+}
+
+#navbar .param {
+    width: fit-content;
+    padding: 5px 10px;
+}
+
+#navbar p{
+    font-weight: bolder;
+}
+
+#navbar input[type='button']{
+    height: 70%;
+}
+
+#navbar #divimg{
+    display: none;
+}
+
+
+#results_research{
+    display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: center;
+}
+
+.businesscard{
+    width:  60%; 
+    padding: 2%;
+    border-radius: 40px;
+    height: fit-content;
+    margin-top: 2%;
+    background-color: white;
+
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: flex-start;
+}
+
+
+.businesscard .tabellainformazioni{
     width: 66%;
-    float: left;
+}
+
+.businesscard .tabellainformazioni th, .tabellainformazioni td{
+    padding: 5px
 }
 
 .businesscard p{
@@ -24,16 +86,48 @@
     width: fit-content;
 }
 
-.compability{
-    width: 20%;
-    height: 80%;
-    float: right;
-    font-size: 30px;
-    text-align: center;
-    margin: 55px 0px;
-    border-radius: 50px;
-    margin-right: 30px;
+.businesscard .tabellaazioni{
+    width: 34%;
 
+    display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: space-around;
+}
+
+.tabellaazioni tr{
+    height: 33%;
+}
+
+.tabellaazioni input{
+    width: 100%;
+    font-size: 80%;
+}
+
+
+.compability{
+    width: 50%;
+    height: 30%;
+    font-size: 40px;
+    /*text-align: center;*/
+    padding: 2%;
+    border-radius: 50px;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+.businesscard .btn-primary{
+    background-color: rgb(255, 60, 0);
+}
+
+.businesscard .btn-secondary{
+    background-color: #007bff;
 }
 
 #profile_window{
@@ -59,11 +153,9 @@
  }
  
 textarea{
-    max-width: 90%;
-    min-width: 90%;
-    max-height: 120px;
-    min-height: 120px;
-    
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 100%;    
     border-radius: 10px;
  }
 
@@ -76,18 +168,6 @@ textarea{
      font-size: 10px;
      width: 120px;
  }
-
-nav{
-    background-color: rgb(255, 60, 0);
-}
-
-#inviomessaggio , #apriprofilo{
-    margin-left: 50%;
-}
-
-#tabellainformazioni td {
-    padding-top: 14px;
-}
 
 #navbarSupportedContent li {
     margin-left: 20px;

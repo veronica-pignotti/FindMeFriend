@@ -2,167 +2,133 @@ body{
     background: url('../../images/orangeyellow.jpg') no-repeat center fixed;
     background-size: cover;
     height: fit-content;
-}        
+}    
+
+.titolo{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: stretch;
+    background-color: rgb(255,60,0);
+    padding: 10px;
+}
+
+.titolo p{
+    font-size: 30px;
+    font-weight: bolder;
+    line-height: 1;
+    margin: 0px;
+    padding-left: 2%;
+}
+
+.titolo input[type='button']{
+    font-size: 16px;
+}
+
+.titolo img{
+    display: none;
+}
+
+
+.businesscard{
+    width:  50%; 
+    padding: 2%;
+    border-radius: 40px;
+    height: fit-content;
+    margin-top: 2%;
+    background-color: white;
+    border: 5px dotted rgb(255,60,0);
+
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: flex-start;
+}
+
+#hide{
+    width: fit-content;
+}
 
 /**********************************************INFORMAZIONI***************************************************/
 #informations {
-    border: 1px solid black;
-    margin-top: 10px;
-    background-color: white;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+    padding:2%
 }
 
-#titoloinf{
-    margin-left: 20%;
-    margin-top: 10px;
-    font-size: 20px;
-}
 
-#tabellainformazioni p{
-    margin-top: 16px;
-}
-
-#tabellainformazioni{
-    margin-left: 20px;
-}
 /**********************************************INTERESSI******************************************************/
 
 #interests{
-    border: 1px solid black;
-    margin-top: 10px;
-    background-color: white;
-    padding-bottom: 20px;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: flex-start;
+	align-content: center;
 }
 
-.tabellainteressi, .descr{
-    margin: 0px 10%;
+#interests .businesscard{
+    width: 30%;
 }
 
-.tabellainteressi th{
-    width: 20px;
-}
+
 /**********************************************AGGIUNGI INTERESSE*********************************************/
-#add_interest_window{
-    border: 1px solid black;
-    width: 70%;
-    height: 80%;
-    position:  absolute;
-    margin-left: 20%;
-    
-    display: none;
-    background-color: white;
-    top: 112px;
-}
-
-/*#new_key1 , #new_key2 , #new_key3 , #new_key4 {*/
-#add_interest_window li{
-    width:60% ;
- }
 
 #new_description{
-    width: 90%;
-    height: 100%; 
-    min-width:90%;
+    min-width: 100%;
     min-height: 100%;
     max-width: 90%;
     max-height: 100%;
-    margin-top: 15px;
-    margin-left: 15px;
 }
 
-#elementstyle {
-    padding-left: 40px;
-    border-top-width: 10px;
-    padding-top: 10px;
-}
-
-
-/*#add_interest_add_button , #indietrobtn{*/
-#add_interest_window input[type=button]{
-    font-size: 80%;
-    margin-left: 10%;
-    margin-top: 10%;
+.tdbtn{
+    text-align: center;
+    padding:5%
 }
 
 /**********************************************MODIFICA CAMPO*************************************************/
+
 #set_window{
-    border:  1px black solid;
-    width: 60%;
-    height: 130px;
-    position:  fixed;
-    margin-left: 20%;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
     display: none;
-    background-color: white;
 }
+
+#set_window p, #set_window input{
+    margin: 2%;
+} 
 
 #set_window_input{
-    margin-left: 15%;
-    margin-top: 10px;
-    width: 70%;
-    background-color: white;
+    width: 70%;    
 }
 
-#set_window table {
-    margin-left: 10%;
-    width: 20%;
-    height: 20%;
-}
-
-#set_window th{
-    padding-left: 5%;
-}
-
-#set_window_ok_button {   
+#set_window_ok_button, #annullabtn{
     font-size: 100%;
 }
 
-#annullabtn {
-    margin-left: 50%;   
-    font-size: 100%;
-}
 /**********************************************MODIFICA PASSWORD**********************************************/
-#set_password_window{
-    padding-top: 10px;
-    border: 1px solid black;
-    width: 60%;
-    height: fit-content;
-    position: fixed;
-    margin-left: 10%;
-    background-color: white;
-    display: none;
-    top: 112px;
+#set_password_window input[type='password']{
+    width: 100%;
+}
+
+#set_password_window table td, #set_password_window table th{
+    padding: 2%;
 }
 
 /**********************************************BOTTONI********************************************************/
 
-#delete_profile_btn , #set_password_btn {
-    margin-top: 10px;
-    font-size: 12px;   
-}
-
-#btn_add_interest{
-    margin-left: 20%;
-    margin-top: 10px;
-}
-
-#delete_interest_window , #delete_profile_window{
-    border: 1px solid black;
-    position:  absolute;
-    margin-left: 30%;
-    width: 40%;
-    height: fit-content;
-    display: none;
-    background-color: white;
-    top: 112px;
-}
-
-#delete_interest_yes_button , #nobutton , #cancelbtn , #delete_profile_yes_btn , #indietrocambiopassword , #set_password_ok_btn{
-    margin-left: 20%;
-    margin-top: 10px;
-}
-
 #eliminainteresse{
-    margin-left: 20%;
     font-size: 12px;
-    margin-top: 10px;
-    margin-bottom: 20px;
 }

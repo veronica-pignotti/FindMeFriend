@@ -16,26 +16,23 @@
 </head>
 
 <body>
-    <h1>
+    <div id="first">
         <img id="logoimg" src="../../images/logo.png">
-    </h1>
-
-    <div class="conteiner">
-        <div class="row div_button">
-            <div class="col-xs-6 col-sm-12">
-                <input type="button" value="Home" id="btn_home" class='principal_btn btn btn-primary btn-block'></div>
-            <div class="col-xs-6 col-sm-12">
-                <input type="button" value="Profilo" id="btn_profile" class='principal_btn btn btn-success btn-block'
-                    title="Nel tuo profilo puoi:
+        <div id="divico">
+            <img id="btn_home" src="../../images/homeico.png">
+            <img id="btn_profile" src="../../images/profileico.png" title="Nel tuo profilo puoi:
                 - vedere le tue informazioni;
                 - modificare il nickname o la tua provincia, facendo un doppio click sul campo che vuoi modificare;
                 - aggiungere nuovi interessi;
                 - eliminare interessi;
                 - modificare ogni campo degli interessi, attraverso un doppio click.
                 - modificare la tua password">
-            </div>
-            <div id='content'></div>
         </div>
+
+    </div>
+
+    <div class="conteiner">
+        <div id='content'></div>
     </div>
     <script src="../js/FindMeFriend.js"></script>
 </body>

@@ -84,7 +84,7 @@ var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, pignotti.veronic
 
 module.exports.sendEmailTest = (object, response)=>{
 
-    var index = 1; // Da 0 a 3 poichè il 5° elemento corrisponde all'email gmail
+    var index = 2; // Da 0 a 3 poichè il 5° elemento corrisponde all'email gmail
     fs.readFile('FileTestEmail.json', (err, sender)=>{
         if(err){
             console.log(err);
@@ -92,6 +92,8 @@ module.exports.sendEmailTest = (object, response)=>{
         }
         // STEP 1: Estraggo l'indirizzo email dell'utente dal file.
         sender = JSON.parse(sender)[index];
+
+        console.log("sender = %s", sender);
         
         // STEP 2 : Preparo i dati per l'email
         var mail = {

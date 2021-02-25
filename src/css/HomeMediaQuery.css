@@ -1,0 +1,100 @@
+@media screen and (max-width: 900px) {
+    .businesscard {
+      width: 70%;
+    }
+}
+
+
+@media screen and (max-width: 710px) {
+  .businesscard {
+    width: 80%;
+  }
+
+  #send_message_window{
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .businesscard {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 555px) {
+  .businesscard {
+    width: 100%;
+  }
+}
+
+
+@media screen and (min-width: 521px) {
+  #navbar .collaps{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: stretch;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  #navbar{
+	  align-items: center;
+	  align-content: center;
+    flex-direction: column
+  }
+
+  #navbar #divimg{
+    display: block;
+    height: 25px;
+  }
+
+  #navbar .collaps{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .businesscard .tabellaazioni {
+    width: 34%;
+  }
+
+  #send_message_window{
+    width: 80%;
+  }
+
+  #profile_window {
+    width: 90%
+  }
+}
+
+
+@media screen and (max-width: 450px) {
+  .businesscard  {
+    flex-direction: column;
+  }
+
+  .businesscard .tabellainformazioni{
+    width: 100%;
+  }
+
+  .businesscard .tabellaazioni{
+    width: 100%;
+  }
+
+  .businesscard .tabellaazioni *{
+    margin: 2%;
+    width: fit-content;
+  }
+
+  #profile_window {
+    width: 95%
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  #send_message_window{
+    width: 90%;
+  }
+}  
