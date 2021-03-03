@@ -84,7 +84,7 @@ var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, pignotti.veronic
 
 module.exports.sendEmailTest = (object, response)=>{
 
-    var index = 2; // Da 0 a 3 poichè il 5° elemento corrisponde all'email gmail
+    var index = 3; // Da 0 a 3 poichè il 5° elemento corrisponde all'email gmail
     fs.readFile('FileTestEmail.json', (err, sender)=>{
         if(err){
             console.log(err);
@@ -93,11 +93,11 @@ module.exports.sendEmailTest = (object, response)=>{
         // STEP 1: Estraggo l'indirizzo email dell'utente dal file.
         sender = JSON.parse(sender)[index];
 
-        console.log("sender = %s", sender);
+        console.log("sender = %s", sender.Email);
         
         // STEP 2 : Preparo i dati per l'email
         var mail = {
-            from: '"mittente di test" <' + sender.Email + '>',
+            from: '"mittente di test di Find Me, Friend" <' + sender.Email + '>',
             to: recipients,
             subject: object.subj,
             text: object.text,
@@ -152,6 +152,9 @@ module.exports.sendEmailTest = (object, response)=>{
                     response.end(JSON.stringify(err?{code:500, message: "Si è verificato un errore durante l'invio del messaggio"}:{code:200, message: "Il tuo messaggio è stato inviato!"}));            
                 })
             }
-        }) // chiude verify
+        })// chiude verify
+        
+        console.log("Email inviate con successo!");
+        
     }) // chiude readfile
 }

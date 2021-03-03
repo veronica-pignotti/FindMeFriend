@@ -26,9 +26,9 @@ function prepareProfile(){
 function showInformations(){
     template_informations = "<div class='businesscard'><table id='tabellainformazioni'><tr><th><span>Nome: </span></th><td><p>"+session.Name+"</p></td></tr>"+
         "<tr><th><span>Cognome: </span></th><td><p>"+session.Surname+"</p></td></tr>"+
-        "<tr><th><span>Nickname: </span></th><td><p ondblclick= "+'"' + "set('info_Nickname') " + '"' + ">" + session.Nickname+"</p></td></tr>"+
+        "<tr><th><span>Nickname: </span></th><td><p  title = 'Fai doppio click per modificare questo campo'  ondblclick= "+'"' + "set('info_Nickname') " + '"' + ">" + session.Nickname+"</p></td></tr>"+
         "<tr><th><span>Anno di nascita: </span></th><td><p>"+ session.Year+"</p></td></tr>" +
-        " <tr><th><span>Provincia: </span></th><td><p ondblclick= "+'"' + "set('info_Province') " + '"' + ">"+session.Province+"</p></td></tr></table></div>";
+        " <tr><th><span>Provincia: </span></th><td><p  title = 'Fai doppio click per modificare questo campo'  ondblclick= "+'"' + "set('info_Province') " + '"' + ">"+session.Province+"</p></td></tr></table></div>";
     $('#informations').html(template_informations);    
 }
 
@@ -38,12 +38,17 @@ function showInformations(){
 function showInterests() {
     template_interests = "";
     session.Interests.forEach((inter, index)=>{
-        template_interests += "<div class= 'businesscard'><table class = 'tabellainteressi'><tr><th>Nome interesse: </th><td ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr><tr><th>Key 1 : </th><td ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>";
-        template_interests += "<tr><th>Key 2: </th><td id = 'inter_Key2-"+index+"' ondblclick= "+'"' + "set('inter_Key2-"+index+"') "+'"' + ">" + (inter.Key2 == null? "" : inter.Key2) +"</td></tr>"
-        template_interests += "<tr><th>Key 3 : </th><td ondblclick= "+'"' + "set('inter_Key3-"+index+"') "+'"' + ">" + (inter.Key3 == null? "" : inter.Key3) +"</td></tr>";
-        template_interests += "<tr><th>Key 4 : </th><td ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr>";
-        template_interests+= "<tr><th class = 'descr' colspan=2><b>Descrizione: </b></th></tr>"+
-        "<tr><td colspan=2 ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</td></tr><tr><td colspan= 2 class='tdbtn'><input type='button' id= 'eliminainteresse' class='delete_interest_btn btn btn-danger' value='Elimina interesse' onclick= "+'"' + "deleteInterest("+index+") "+'"' + "></td></tr></table></div>";
+        template_interests += "<div class= 'businesscard'>"+
+            "<table class = 'tabellainteressi'>"+
+            "<tr><th>Nome interesse: </th><td title = 'Fai doppio click per modificare questo campo' id = 'inter_Name-"+index+"' ondblclick= "+'"' + "set('inter_Name-"+index+"') "+'"' + ">" + inter.Name+"</td></tr>"+
+            "<tr><th>Key 1 : </th><td title = 'Fai doppio click per modificare questo campo'  id = 'inter_key1-"+index+"' ondblclick= "+'"' + "set('inter_key1-"+index+"') "+'"' + ">" + inter.Key1+"</td></tr>"+
+            "<tr><th>Key 2: </th><td title = 'Fai doppio click per modificare questo campo'  id = 'inter_Key2-"+index+"' ondblclick= "+'"' + "set('inter_Key2-"+index+"') "+'"' + ">" + (inter.Key2 == null? "" : inter.Key2) +"</td></tr>"+
+            "<tr><th>Key 3 : </th><td title = 'Fai doppio click per modificare questo campo'  id = 'inter_Key3-"+index+"' ondblclick= "+'"' + "set('inter_Key3-"+index+"') "+'"' + ">" + (inter.Key3 == null? "" : inter.Key3) +"</td></tr>"+
+            "<tr><th>Key 4 : </th><td title = 'Fai doppio click per modificare questo campo'  id = 'inter_Key4-"+index+"' ondblclick= "+'"' + "set('inter_Key4-"+index+"') "+'"' + ">" + (inter.Key4 == null? "" : inter.Key4) +"</td></tr>"+
+            "<tr><th class = 'descr' colspan=2><b>Descrizione: </b></th></tr>"+
+            "<tr><td title = 'Fai doppio click per modificare questo campo' id = 'inter_Description-"+index+"' colspan=2 ondblclick= "+'"' + "set('inter_Description-"+index+"') "+'"' + ">" + inter.Description+"</td></tr>"+
+            "<tr><td   colspan= 2 class='tdbtn'><input type='button' id= 'eliminainteresse' class='delete_interest_btn btn btn-danger' value='Elimina interesse' onclick= "+'"' + "deleteInterest("+index+") "+'"' + "></td></tr>"+
+            "</table></div>";
     }); 
     $.get('/api/getrules', (rules)=>{
         rules = JSON.parse(rules);
@@ -60,7 +65,9 @@ function showInterests() {
 function set(item){
     $('#set_window').css({"display": "flex"});
     last_item = item;
-    $('#set_window_input').val($(x).text());
+
+    console.log("%s %s %s",last_item, "|||||",  $('#'+ last_item).text());
+    $('#set_window_input').val($('#'+ last_item).text());
 };
 
 /**
