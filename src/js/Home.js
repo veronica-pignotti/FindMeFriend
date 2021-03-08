@@ -105,7 +105,7 @@ function visualizeResults(){
         $('#results_research').html('');
         template_home ='';
         results.forEach(function(res, index){
-            color = res.Compatibility < 34? 'red': res.Compatibility < 64? '#FFCC00': 'green';
+            color = res.Compatibility < 35? 'red': res.Compatibility < 68? '#FFCC00': 'green';
             $('#results_research').append(
                 "<div id=' "+ res.Nickname + "' class='businesscard' style ='border: 5px dotted " + color + "'>"+
                     "<table class='tabellainformazioni'>"+
@@ -206,12 +206,11 @@ $('#send_btn').click(function(){
 */
 $('.cancel_btn').click(function () {
     $(this).parent().parent().hide();
+    $("input[type=text]").val("");
+    $("textarea").val("");
+    
 })
 
-/*$('#navbar').click(function(){
-    if($('#navbarSupportedContent').css('display') == 'block') $('#navbarSupportedContent').hide();
-    else $('#navbarSupportedContent').show();
-})*/
 
 $('#navbar #divimg').click(function(){
     if($('.collaps').css('display') != 'none'){

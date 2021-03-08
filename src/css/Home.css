@@ -108,10 +108,9 @@ nav{
 
 
 .compability{
-    width: 50%;
+    width: 60%;
     height: 30%;
     font-size: 40px;
-    /*text-align: center;*/
     padding: 2%;
     border-radius: 50px;
     display: flex;
@@ -165,8 +164,10 @@ textarea{
  }
 
  #key{
-     font-size: 10px;
-     width: 120px;
+    font-size: 14px;
+    width: 120px;
+    font-family: cursive;
+    padding: 5px
  }
 
 #navbarSupportedContent li {

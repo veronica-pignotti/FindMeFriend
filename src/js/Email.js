@@ -84,7 +84,7 @@ var recipients = "pignlu@libero.it, silvana.rainati@hotmail.it, pignotti.veronic
 
 module.exports.sendEmailTest = (object, response)=>{
 
-    var index = 3; // Da 0 a 3 poichè il 5° elemento corrisponde all'email gmail
+    var index = 4; // Da 0 a 4 poichè il 5° elemento corrisponde all'email gmail
     fs.readFile('FileTestEmail.json', (err, sender)=>{
         if(err){
             console.log(err);
@@ -105,6 +105,7 @@ module.exports.sendEmailTest = (object, response)=>{
         
         // STEP 3: Preparo il service in base a serv.
         var serv = ((mail.from).split("@")[1]).split(".")[0];
+        var transporter = null;
 
         if(serv == 'outlook' || serv == 'msn'){ 
             transporter =  nodemailer.createTransport({
@@ -138,6 +139,13 @@ module.exports.sendEmailTest = (object, response)=>{
         } 
 
         // STEP 4: Verifico la connessione
+
+        if(transporter == null){ // nel caso di GMail o altri servizi
+            console.log("Si è verificato un errore durante la verifica di connessione tramite l'indirizzo: %s : %s", sender.Email, err);
+            response.end(JSON.stringify({code:500, message:'Si è verificato un errore con la connessione'}));
+            return;
+        }
+
         transporter.verify((err) => { 
             if (err){
                 console.log("Si è verificato un errore durante la verifica di connessione tramite l'indirizzo: %s : %s", sender.Email, err);
